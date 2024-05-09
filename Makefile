@@ -5,17 +5,19 @@ TESTOBJS := $(shell find -type f -wholename "./tests/*.c" -print \
 
 CC := $(shell which gcc)
 TEST_FLAGS := -std=c11 -O3
-# NOSTD_FLAG := -nostdlib \
-# 			  -DNOSTDLIB_BUILD \
-# 			  -s \
-# 			  -fno-stack-protector \
-# 			  -fdata-sections \
-# 			  -fno-unwind-tables \
-# 			  -fno-asynchronous-unwind-tables \
-# 			  -ffunction-sections \
-# 			  -Wl,-n \
-# 			  -Wl,--gc-sections \
-# 			  -Wl,--build-id=none
+ifdef NOSTD
+	NOSTD_FLAG := -nostdlib \
+				  -DNOSTDLIB_BUILD \
+				  -s \
+				  -fno-stack-protector \
+				  -fdata-sections \
+				  -fno-unwind-tables \
+				  -fno-asynchronous-unwind-tables \
+				  -ffunction-sections \
+				  -Wl,-n \
+				  -Wl,--gc-sections \
+				  -Wl,--build-id=none
+endif
 
 TARGET := minh
 TEST_BIN_DIR := tests/bin

@@ -3,8 +3,8 @@
 
 #include "min_def.h"
 
-u32 min_strlen(char *s);
+u32 min_strlen(const char *s);
 
-void min_memcpy(void *dst, void *src, u32 size);
+void min_memcpy(void *dst, const void *src, u32 size);
 
 #endif

@@ -5,5 +5,6 @@
 #include "arr.h"
 #include "vec.h"
 #include "algo.h"
+#include "min_math.h"
 
 #endif

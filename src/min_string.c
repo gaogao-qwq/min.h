@@ -85,6 +85,18 @@ bool min_isdigit(int ch) {
 	return min_strchr("1234567890", ch) ? true : false;
 }
 
+i32 min_strcmp(const char *lhs, const char *rhs) {
+	const char *l = lhs, *r = rhs;
+	while (*l || *r) {
+		if (*l < *r) return -1;
+		if (*l > *r) return 1;
+		++l, ++r;
+	}
+	if (*l && *r) return 0;
+	if (*l) return -1;
+	return 1;
+}
+
 i32 min_reverse(char *str) {
 	if (str == nil) return -1;
 	u32 len = min_strlen(str);

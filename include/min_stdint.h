@@ -1,8 +1,6 @@
 #ifndef MIN_STDINT_H_
 #define MIN_STDINT_H_ 1
 
-#include "min_def.h"
-
 #define I8_MIN  	(-128)
 #define I16_MIN 	(-32767-1)
 #define I32_MIN 	(-2147483647-1)

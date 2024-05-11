@@ -13,6 +13,8 @@ char *min_strchr(char *str, i32 ch);
 
 i32 min_strcmp(const char *lhs, const char *rhs);
 
+i32 min_reverse(char *str);
+
 u32 min_strlen(const char *s);
 
 void min_memcpy(void *dst, const void *src, u32 size);

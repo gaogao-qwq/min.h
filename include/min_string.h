@@ -3,6 +3,14 @@
 
 #include "min_def.h"
 
+i32 min_atoi(const char *str);
+
+i64 min_atoll(const char *str);
+
+bool min_isdigit(int ch);
+
+char *min_strchr(char *str, i32 ch);
+
 u32 min_strlen(const char *s);
 
 void min_memcpy(void *dst, const void *src, u32 size);

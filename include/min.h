@@ -6,5 +6,6 @@
 #include "vec.h"
 #include "algo.h"
 #include "min_math.h"
+#include "min_conv.h"
 
 #endif

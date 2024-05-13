@@ -4,6 +4,10 @@
 
 i32 u32toa(u32 num, char *dst) {
 	if (dst == nil) return -1;
+	if (!num) {
+		dst[0] = '0', dst[1] = '\0';
+		return 0;
+	}
 	u32 i = 0;
 	while (num) {
 		dst[i] = '0' + num % 10;
@@ -16,6 +20,10 @@ i32 u32toa(u32 num, char *dst) {
 
 i32 u64toa(u64 num, char *dst) {
 	if (dst == nil) return -1;
+	if (!num) {
+		dst[0] = '0', dst[1] = '\0';
+		return 0;
+	}
 	u32 i = 0;
 	while (num) {
 		dst[i] = '0' + num % 10;
@@ -28,6 +36,10 @@ i32 u64toa(u64 num, char *dst) {
 
 i32 i32toa(i32 num, char *dst) {
 	if (dst == nil) return -1;
+	if (!num) {
+		dst[0] = '0', dst[1] = '\0';
+		return 0;
+	}
 	u32 i = 0;
 	bool neg = false;
 	if (num < 0) {
@@ -46,6 +58,10 @@ i32 i32toa(i32 num, char *dst) {
 
 i64 i64toa(i64 num, char *dst) {
 	if (dst == nil) return -1;
+	if (!num) {
+		dst[0] = '0', dst[1] = '\0';
+		return 0;
+	}
 	u32 i = 0;
 	bool neg = false;
 	if (num < 0) {

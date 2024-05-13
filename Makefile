@@ -5,7 +5,7 @@ TESTOBJS := $(shell find -type f -wholename "./tests/*.c" -print \
 
 CC := $(shell which gcc)
 TEST_FLAGS := -std=c11 -O3
-ifdef NOSTD
+ifdef NOSTDBUILD
 	NOSTD_FLAG := -nostdlib \
 				  -DNOSTDLIB_BUILD \
 				  -s \

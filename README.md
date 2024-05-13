@@ -3,13 +3,13 @@
 `min` is the pinyin of the Chinese character `皿`, which represents a vessel
 for holding stuff.
 
-> ![WARN]
+> [!WARN]
 > This project is just for fun & learning, thus it has absolute NO WARRANTY,
 > use it as your own risk.
 
 ## Build
 
-> ![INFO]
+> [!INFO]
 > Make sure to run `make clean` before you change compile options
 
 ### With C standard library (Only tested with GCC)

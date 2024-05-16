@@ -3,6 +3,7 @@
 #include "min_def.h"
 
 #define CHUNK_LIST_CAP 		((u32)1024)
+
 typedef struct {
 	void 		*start;
 	u32  		size;
@@ -13,12 +14,27 @@ typedef struct {
 	Chunk 		chunks[CHUNK_LIST_CAP];
 } ChunkList;
 
-// TODO: Implement chunk_list_find
+/**
+ *	@brief Binary search allocated chunk by pointer
+ *	@param ptr - the pointer to find
+ *	@return the index of the chunk in chunk list, if the pointer is NULL or is not
+ *	allocated by min_malloc, it will return -1;
+ */
 int chunk_list_find(void *ptr);
 
+/**
+ *	@brief Insert a new chunk into chunk list
+ *	@param list - the list where the chunk will be inserted to
+ *	@param start - the pointer pointed to the insert chunk
+ *	@param size - the size of the insert chunk
+ */
 void chunk_list_insert(ChunkList *list, void *start, u32 size);
 
-// TODO: Implement chunk_list_remove
+/**
+ *	@brief Remove a chunk from chunk list by index
+ *	@param list - the list where the chunk will be removed from
+ *	@param index - the index of the chunk to remove
+ */
 void chunk_list_remove(ChunkList *list, u32 index);
 
 /**
@@ -30,13 +46,15 @@ void chunk_list_remove(ChunkList *list, u32 index);
 void *min_malloc(u32 size);
 
 /**
- *	@brief Free block allocated by min_malloc
+ *	@brief Get allocated chunk list
+ *	@return the allocated chunk list
  */
-void min_free(void *ptr);
-
 ChunkList *bump_alloced_chunks();
 
-// TODO: Implement min_free
+/**
+ *	@brief Free the chunk allocated by min_malloc
+ *	@param ptr - the pointer pointed to the chunk to be freed
+ */
 void min_free(void *ptr);
 
 // TODO: Implement min_collect

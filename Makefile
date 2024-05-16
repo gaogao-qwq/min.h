@@ -5,7 +5,7 @@ TESTOBJS := $(shell find -type f -wholename "./tests/*.c" -print \
 
 CC := $(shell which gcc)
 TEST_FLAGS := -std=c11 -O3
-ifdef NOSTDBUILD
+ifdef NOSTDLIB_BUILD
 	NOSTD_FLAG := -nostdlib \
 				  -DNOSTDLIB_BUILD \
 				  -s \
@@ -27,11 +27,11 @@ STATIC_DIR := lib/static
 ALL: $(TESTOBJS)
 
 $(LIBOBJS): %.o: %.c
-	$(CC) -c -g -fPIC $(NOSTD_FLAG) -o $@ $<
+	$(CC) -c -g -fPIC -Os $(NOSTD_FLAG) -o $@ $<
 
 shared: $(LIBOBJS)
 	@mkdir -p $(SHARED_DIR)
-	$(CC) -shared $(NOSTD_FLAG) -o $(SHARED_DIR)/lib$(TARGET).so $^
+	$(CC) -shared -Os $(NOSTD_FLAG) -o $(SHARED_DIR)/lib$(TARGET).so $^
 
 static: $(LIBOBJS)
 	@mkdir -p $(STATIC_DIR)

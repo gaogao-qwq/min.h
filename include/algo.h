@@ -1,6 +1,6 @@
 #ifndef ALGO_H_
 #define ALGO_H_
-#include "min_core.h"
+#include "min_def.h"
 
 #ifdef NOSTDLIB_BUILD
 #define RNSEED_LEN 4

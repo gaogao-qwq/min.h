@@ -1,7 +1,9 @@
 #ifndef MIN_H_
 #define MIN_H_ 1
 
-#include "min_core.h"
+#ifdef NOSTDLIB_BUILD
+#include "min_stdlib.h"
+#endif
 #include "arr.h"
 #include "vec.h"
 #include "algo.h"

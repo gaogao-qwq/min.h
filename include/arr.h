@@ -1,6 +1,6 @@
 #ifndef ARR_H_
 #define ARR_H_
-#include "min_core.h"
+#include "min_def.h"
 
 typedef struct Arr {
 	void	*data;

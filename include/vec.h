@@ -1,6 +1,6 @@
 #ifndef VEC_CORE_H_
 #define VEC_VORE_H_ 1
-#include "min_core.h"
+#include "min_def.h"
 
 typedef struct Vec {
 	void	*data;

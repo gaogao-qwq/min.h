@@ -1,4 +1,6 @@
 #include "../include/algo.h"
+#include "../include/min_syscall.h"
+#include "../include/min_string.h"
 
 #ifdef NOSTDLIB_BUILD
 static char buf[RNSEED_LEN];

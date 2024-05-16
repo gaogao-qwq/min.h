@@ -1,8 +1,5 @@
 #define NOSTDLIB_BUILD
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
 #include "../include/min.h"
 
 #define TESTARR_LEN (u32)1e4
@@ -44,8 +41,9 @@ int main(void) {
 	// Test 2
 	//---------------
 	min_print("\nTesting(2/2)...\n");
-	srandom(time(nil));
-	for (u32 i = 0; i < TESTARR_LEN; ++i) unsorted[i] = (i32)random();
+	char buf[4];
+	sys_getrandom(buf, 4, GRND_NONBLOCK);
+	for (u32 i = 0; i < TESTARR_LEN; ++i) unsorted[i] = *(i32 *)buf;
 	min_qsort(unsorted, TESTARR_LEN, sizeof(unsorted[0]), compar);
 	for (u32 i = 1; i < TESTARR_LEN; ++i) {
 		if (unsorted[i] < unsorted[i - 1]) {

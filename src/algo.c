@@ -18,8 +18,7 @@ void min_swap(void *a, void *b, u32 size) {
 }
 
 void *min_bsearch(const void *key, const void *base,
-				  u32 nmemb, u32 size,
-				  compar_t compar) {
+                  u32 nmemb, u32 size, compar_t compar) {
 	u32 l, u, idx;
 	const void *p;
 	i32 comparison;
@@ -42,26 +41,18 @@ void *min_bsearch(const void *key, const void *base,
 }
 
 void min_qsort(void *base, u32 nmemb, u32 size,
-			   compar_t compar) {
+               compar_t compar) {
 	// End point of recursion
 	if (nmemb <= 1) return;
 	u32 rn;
 	char pivot[size];
 
-#ifdef NOSTDLIB_BUILD
 	// Get random bytes and cast first 4bytes of it to u32
 	i32 res = sys_getrandom(buf, RNSEED_LEN, GRND_NONBLOCK);
 	if (res == -1) return;
 	rn = *((u32 *)buf) % nmemb;
 	// Copy pivot from base
 	min_memcpy(pivot, base + rn * size, size);
-#else
-	/* Use stdlib rand() */
-	srand(time(nil));
-	rn = (u32)rand() % nmemb;
-	// Use memcpy
-	memcpy(pivot, base + rn * size, size);
-#endif
 
 	// idx: index of current operating element
 	// base[0:j): elements less than pivot

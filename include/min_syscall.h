@@ -41,7 +41,7 @@ i64 sys_read(int fd, void *buf, u64 size);
 i64 sys_write(int fd, const void *buf, u64 size);
 
 void *sys_mmap(void *addr, u32 length, i32 prot,
-			   i32 flags, i32 fd, i32 off);
+               i32 flags, i32 fd, i32 off);
 
 i32 sys_munmap(void *addr, u32 length);
 

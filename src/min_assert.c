@@ -5,7 +5,7 @@
 #include "../include/min_stdlib.h"
 
 void min_assert_fail(const char *assertion, const char *file,
-					 u32 line, const char *function) {
+                     u32 line, const char *function) {
 	char linestr[9];
 	u32toa(line, linestr);
 	sys_write(STDERR_FILENO, file, min_strlen(file));

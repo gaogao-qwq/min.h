@@ -13,7 +13,7 @@ i32 min_print(const char *str) {
 }
 
 i32 parse_format(const char *restrict format, u32 *cnt,
-				 format_specifier *specs) {
+                 format_specifier *specs) {
 	u32 i = 0, j = 0, count = 0;
 	for (i = 0; format[i]; ++i) {
 		if (format[i] != '%') continue;
@@ -37,7 +37,7 @@ i32 parse_format(const char *restrict format, u32 *cnt,
 }
 
 i32 _min_sprintf(const char *restrict format, char *str,
-				 format_specifier *specs, u32 cnt, __builtin_va_list argp) {
+                 format_specifier *specs, u32 cnt, __builtin_va_list argp) {
 	if (str == nil) return -1;
 	u32 i = 0, j = 0, k = 0;
 	while (format[i]) {

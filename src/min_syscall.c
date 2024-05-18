@@ -29,7 +29,7 @@ i64 sys_write(i32 fd, const void *buf, u64 size) {
 }
 
 void *sys_mmap(void *addr, u32 length, i32 prot,
-			   i32 flags, i32 fd, i32 off) {
+               i32 flags, i32 fd, i32 off) {
 	register u64   rax __asm__("rax") = NR_MMAP;
 	register void *rdi __asm__("rdi") = addr;
 	register u32   rsi __asm__("rsi") = length;

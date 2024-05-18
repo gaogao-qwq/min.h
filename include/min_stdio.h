@@ -24,10 +24,10 @@ typedef struct format_specifier {
 i32 min_print(const char *s);
 
 i32 parse_format(const char *restrict format, u32 *cnt,
-				 format_specifier *specs);
+                 format_specifier *specs);
 
 i32 _min_sprintf(const char *restrict format, char *str,
-				 format_specifier *specs, u32 cnt, __builtin_va_list argp);
+                 format_specifier *specs, u32 cnt, __builtin_va_list argp);
 
 i32 min_sprintf(char *buf, const char *fmt, ...);
 

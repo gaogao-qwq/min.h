@@ -3,9 +3,9 @@
 #include "min_def.h"
 
 typedef struct Vec {
-	void	*data;
-	u32		len;
-	u32		capacity;
+	void 	*data;
+	u32  	len;
+	u32  	capacity;
 } Vec;
 static Vec *makeVec(u32 size, u32 len);
 

@@ -3,7 +3,6 @@
 #include "../include/algo.h"
 
 static ChunkList alloced_chunks = {0};
-static ChunkList freed_chunks = {0};
 
 static int compar(const void *a, const void *b) {
 	return (Chunk *)a - (Chunk *)b;

@@ -3,8 +3,8 @@
 #include "min_def.h"
 
 typedef struct Arr {
-	void	*data;
-	u32		len;
+	void 	*data;
+	u32  	len;
 } Arr;
 static Arr *makeArr(u32 size, u32 len);
 static Arr *makeEmptyArr();

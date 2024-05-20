@@ -1,3 +1,4 @@
+
 LIBOBJS := $(shell find -type f -wholename "./src/*.c" -print \
 		   | sed "s/\.c/.o/")
 TESTOBJS := $(shell find -type f -wholename "./tests/*.c" -print \
@@ -5,19 +6,17 @@ TESTOBJS := $(shell find -type f -wholename "./tests/*.c" -print \
 
 CC := $(shell which gcc)
 TEST_FLAGS := -std=c11 -O3
-ifdef NOSTDLIB_BUILD
-	NOSTD_FLAG := -nostdlib \
-				  -DNOSTDLIB_BUILD \
-				  -s \
-				  -fno-stack-protector \
-				  -fdata-sections \
-				  -fno-unwind-tables \
-				  -fno-asynchronous-unwind-tables \
-				  -ffunction-sections \
-				  -Wl,-n \
-				  -Wl,--gc-sections \
-				  -Wl,--build-id=none
-endif
+NOSTD_FLAG := -nostdlib \
+				-DNOSTDLIB_BUILD \
+				-s \
+				-fno-stack-protector \
+				-fdata-sections \
+				-fno-unwind-tables \
+				-fno-asynchronous-unwind-tables \
+				-ffunction-sections \
+				-Wl,-n \
+				-Wl,--gc-sections \
+				-Wl,--build-id=none
 
 TARGET := minh
 TEST_BIN_DIR := tests/bin
@@ -35,7 +34,7 @@ shared: $(LIBOBJS)
 
 static: $(LIBOBJS)
 	@mkdir -p $(STATIC_DIR)
-	ar rcs $(STATIC_DIR)/lib$(TARGET).a $^
+	@ar rcs $(STATIC_DIR)/lib$(TARGET).a $^
 
 $(TESTOBJS): %.o: %.c static shared
 	@mkdir -p $(TEST_BIN_DIR)/static
@@ -49,6 +48,6 @@ $(TESTOBJS): %.o: %.c static shared
 		sed "s/tests\///")
 
 clean:
-	rm -f $(shell find -type f \( -wholename "*.o" \
+	@rm $(shell find -type f \( -wholename "*.o" \
 		-o -wholename "*.a" -o -wholename "*.so" \))
 

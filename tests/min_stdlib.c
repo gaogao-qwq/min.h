@@ -3,8 +3,8 @@
 #include <stdio.h>
 
 int main(void) {
-	clock_t curr_time = sys_time(nil);
-	printf("%ld\n", curr_time);
+	// clock_t curr_time = sys_time(nil);
+	// printf("%ld\n", curr_time);
 	char buf[4];
 	i64 res = sys_getrandom(buf, 4u, GRND_NONBLOCK);
 	i32 *rn = (i32 *)buf;

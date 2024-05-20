@@ -1,6 +1,9 @@
-#include "../include/min_syscall.h"
+#ifdef __amd64__
+#include "../../../include/arch/x86/amd64_syscall.h"
+#include "../../../include/min_def.h"
+// rax rdi rsi rdx r10 r8 r9
 
-i64 sys_read(int fd, void *buf, u64 size) {
+i64 sys_read(i32 fd, void *buf, u64 size) {
 	register u64         rax __asm__("rax") = NR_READ;
 	register i32         rdi __asm__("rdi") = fd;
 	register const void *rsi __asm__("rsi") = buf;
@@ -135,3 +138,4 @@ i64 sys_getrandom(char *buf, u64 count, u32 flags) {
 	return ret;
 }
 
+#endif // __amd64__

@@ -12,16 +12,10 @@ for holding stuff.
 > [!NOTE]
 > Make sure to run `make clean` before you change compile options
 
-### With C standard library (Only tested with GCC)
+### Build (Only work on amd64, loongarch64 GNU/Linux, perhaps)
 
 ```sh
 make
-```
-
-### Without C standard library (Only on amd64 GNU/Linux, perhaps)
-
-```sh
-make NOSTDBUILD=1
 ```
 
 After compilation, static library will be placed at `lib/static`, and

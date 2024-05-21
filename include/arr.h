@@ -6,7 +6,7 @@ typedef struct Arr {
 	void 	*data;
 	u32  	len;
 } Arr;
-static Arr *makeArr(u32 size, u32 len);
-static Arr *makeEmptyArr();
+Arr *makeArr(u32 size, u32 len);
+Arr *makeEmptyArr();
 
 #endif //ARR_H_

@@ -7,6 +7,6 @@ typedef struct Vec {
 	u32  	len;
 	u32  	capacity;
 } Vec;
-static Vec *makeVec(u32 size, u32 len);
+Vec *makeVec(u32 size, u32 len);
 
 #endif // VEC_VORE_H_

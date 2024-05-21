@@ -1,5 +1,3 @@
-#define NOSTDLIB_BUILD
-#include <stdio.h>
 #include "../include/min.h"
 
 #define TESTARR_LEN (u32)1e4
@@ -27,13 +25,10 @@ int main(void) {
 	min_qsort(arr, 10, sizeof(arr[0]), compar);
 	for (u32 i = 1; i < 10; ++i) {
 		if (arr[i] < arr[i - 1]) {
-			printf("1st test failed at idx %d", i);
+			min_printf("1st test failed at idx %d", i);
 			flag1 = false;
 			break;
 		}
-	}
-	for (u32 i = 0; i < 10; ++i) {
-		printf("[%d]: %d, ", i, arr[i]);
 	}
 	if (flag1) min_print("\nTest 1 passed.\n");
 
@@ -47,7 +42,7 @@ int main(void) {
 	min_qsort(unsorted, TESTARR_LEN, sizeof(unsorted[0]), compar);
 	for (u32 i = 1; i < TESTARR_LEN; ++i) {
 		if (unsorted[i] < unsorted[i - 1]) {
-			printf("2nd test failed at idx %d", i);
+			min_printf("2nd test failed at idx %d", i);
 			flag2 = false;
 			break;
 		}

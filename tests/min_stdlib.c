@@ -1,12 +1,13 @@
-#define NOSTDLIB_BUILD 1
-#include "../include/min.h"
 #include <stdio.h>
 
+#include "../include/min.h"
+
 int main(void) {
-	// clock_t curr_time = sys_time(nil);
-	// printf("%ld\n", curr_time);
+	timeval tv = {0};
+	i32 res = sys_gettimeofday(&tv, nil);
+	printf("%d\n", tv.tv_sec);
 	char buf[4];
-	i64 res = sys_getrandom(buf, 4u, GRND_NONBLOCK);
+	res = sys_getrandom(buf, 4u, GRND_NONBLOCK);
 	i32 *rn = (i32 *)buf;
 	if (res != -1) {
 		printf("%d\n", *rn);

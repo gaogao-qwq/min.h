@@ -1,4 +1,3 @@
-#define NOSTDLIB_BUILD
 #include "../include/min.h"
 
 static char buf[U16_MAX];

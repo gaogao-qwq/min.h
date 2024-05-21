@@ -1,6 +1,7 @@
 #define NOSTDLIB_BUILD
+#include <stdio.h>
+
 #include "../include/min.h"
-#include "stdio.h"
 
 i32 main(void) {
 	printf("Testing min_malloc()...\n");
@@ -12,9 +13,8 @@ i32 main(void) {
 	u32 chunks_count = alloced->length;
 	printf("Allocated chunks:\n");
 	for (u32 i = 0; i < chunks_count; ++i) {
-		printf("\tstart: %p, size: %u\n",
-				alloced->chunks[i].start,
-				alloced->chunks[i].size);
+		printf("\tstart: %p, size: %u\n", alloced->chunks[i].start,
+			   alloced->chunks[i].size);
 	}
 	printf("\n");
 
@@ -24,9 +24,8 @@ i32 main(void) {
 	chunks_count = alloced->length;
 	printf("Allocated chunks after min_free:\n");
 	for (u32 i = 0; i < chunks_count; ++i) {
-		printf("\tstart: %p, size: %u\n",
-				alloced->chunks[i].start,
-				alloced->chunks[i].size);
+		printf("\tstart: %p, size: %u\n", alloced->chunks[i].start,
+			   alloced->chunks[i].size);
 	}
 	printf("\n");
 	return 0;

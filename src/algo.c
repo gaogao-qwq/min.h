@@ -45,7 +45,7 @@ void min_qsort(void *base, u32 nmemb, u32 size,
 	// End point of recursion
 	if (nmemb <= 1) return;
 	u32 rn;
-	char pivot[size];
+	char pivot[size], buf[sizeof(int)];
 
 	// Get random bytes and cast first 4bytes of it to u32
 	i32 res = sys_getrandom(buf, RNSEED_LEN, GRND_NONBLOCK);

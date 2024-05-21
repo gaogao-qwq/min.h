@@ -14,7 +14,6 @@ LIB_FLAGS := -nostdlib \
              -Wall \
              -s \
              -static \
-             -no-pie \
              -fno-stack-protector \
              -fdata-sections \
              -fno-unwind-tables \

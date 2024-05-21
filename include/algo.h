@@ -2,9 +2,7 @@
 #define ALGO_H_
 #include "min_def.h"
 
-#ifdef NOSTDLIB_BUILD
 #define RNSEED_LEN 4
-#endif
 
 typedef i32 (*compar_t) (const void *, const void *);
 

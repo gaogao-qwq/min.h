@@ -1,12 +1,9 @@
 #include "../include/min_core.h"
-#include "../include/min_syscall.h"
+
 #include "../include/algo.h"
+#include "../include/min_syscall.h"
 
 static ChunkList alloced_chunks = {0};
-
-static int compar(const void *a, const void *b) {
-	return (Chunk *)a - (Chunk *)b;
-}
 
 // INFO: O(logN)
 int chunk_list_find(void *ptr) {

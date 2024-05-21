@@ -19,4 +19,4 @@ u32 min_strlen(const char *s);
 
 void min_memcpy(void *dst, const void *src, u32 size);
 
-#endif
+#endif // MIN_STRING_H_

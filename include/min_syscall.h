@@ -9,4 +9,4 @@
 	#include "arch/loongarch/loongarch64_syscall.h"
 #endif
 
-#endif
+#endif // MIN_SYSCALL_H_

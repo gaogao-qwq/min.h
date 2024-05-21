@@ -9,4 +9,4 @@ typedef struct Arr {
 static Arr *makeArr(u32 size, u32 len);
 static Arr *makeEmptyArr();
 
-#endif
+#endif //ARR_H_

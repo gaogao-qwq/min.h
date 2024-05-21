@@ -7,4 +7,4 @@ i32 i32abs(i32 num);
 
 i64 i64abs(i64 num);
 
-#endif
+#endif // MIN_MATH_H_

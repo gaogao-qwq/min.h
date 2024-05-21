@@ -49,4 +49,4 @@ void *min_bsearch(const void *key, const void *base,
 void min_qsort(void *base, u32 nmemb, u32 size,
                compar_t compar);
 
-#endif
+#endif // ALGO_H_

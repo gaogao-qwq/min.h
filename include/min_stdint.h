@@ -16,4 +16,4 @@
 #define U32_MAX 	(4294967295U)
 #define U64_MAX 	(18446744073709551615UL)
 
-#endif
+#endif // MIN_STDINT_H_

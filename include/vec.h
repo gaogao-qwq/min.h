@@ -9,4 +9,4 @@ typedef struct Vec {
 } Vec;
 static Vec *makeVec(u32 size, u32 len);
 
-#endif
+#endif // VEC_VORE_H_

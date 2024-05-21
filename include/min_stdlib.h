@@ -9,4 +9,4 @@
 #include "min_assert.h"
 #include "min_core.h"
 
-#endif
+#endif // MIN_STDLIB_H_

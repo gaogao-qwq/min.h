@@ -15,4 +15,4 @@ typedef struct sockaddr {
 	char        		sa_data[14];
 } sockaddr;
 
-#endif
+#endif // MIN_SOCKET_H_

@@ -60,4 +60,4 @@ void min_free(void *ptr);
 // TODO: Implement min_collect
 void min_collect();
 
-#endif
+#endif // MIN_CORE_H_

@@ -9,4 +9,5 @@ void min_assert_fail(const char* assertion, const char *file,
 	if (expr) ;\
 	else min_assert_fail(#expr, __FILE__, __LINE__, __func__);\
 }))
-#endif
+
+#endif // MIN_ASSERT_H_

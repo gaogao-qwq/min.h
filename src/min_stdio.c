@@ -19,15 +19,15 @@ i32 parse_format(const char *restrict format, u32 *cnt,
 		if (format[i] != '%') continue;
 		if (!format[i + 1]) break;
 		if (format[i + 1] == '%') {
-			specs[count].conv_type = PERCENT_LITERAL;
+			specs[count].conv_type = CONVTYPE_PERCENT_LITERAL;
 			specs[count++].loc = i++;
 			continue;
 		} else if (format[i + 1] == 'd') {
-			specs[count].conv_type = SIGNED_DECIMAL;
+			specs[count].conv_type = CONVTYPE_SIGNED_DECIMAL;
 			specs[count++].loc = i++;
 			continue;
 		} else if (format[i + 1] == 's') {
-			specs[count].conv_type = STRING;
+			specs[count].conv_type = CONVTYPE_STRING;
 			specs[count++].loc = i++;
 			continue;
 		}
@@ -42,10 +42,10 @@ i32 _min_sprintf(const char *restrict format, char *str,
 	u32 i = 0, j = 0, k = 0;
 	while (format[i]) {
 		if (specs[j].loc == i) {
-			if (specs[j].conv_type == PERCENT_LITERAL) {
+			if (specs[j].conv_type == CONVTYPE_PERCENT_LITERAL) {
 				++i;
 				str[k++] = '%';
-			} else if (specs[j].conv_type == SIGNED_DECIMAL) {
+			} else if (specs[j].conv_type == CONVTYPE_SIGNED_DECIMAL) {
 				++i;
 				char t[11], *pt = t;
 				i32toa(__builtin_va_arg(argp, i32), t);
@@ -53,7 +53,7 @@ i32 _min_sprintf(const char *restrict format, char *str,
 					str[k] = *pt;
 					++pt, ++k;
 				}
-			} else if (specs[j].conv_type == STRING) {
+			} else if (specs[j].conv_type == CONVTYPE_STRING) {
 				++i;
 				char *t = __builtin_va_arg(argp, char *);
 				min_memcpy(str + k, t, min_strlen(t));

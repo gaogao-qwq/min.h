@@ -6,7 +6,7 @@
 static ChunkList alloced_chunks = {0};
 
 // INFO: O(logN)
-int chunk_list_find(void *ptr) {
+i32 chunk_list_find(void *ptr) {
 	u32 l = 0, r = alloced_chunks.length;
 	while (l < r) {
 		u32 idx = (l + r) / 2;
@@ -32,14 +32,16 @@ void chunk_list_insert(ChunkList *list, void *start, u32 size) {
 	++list->length;
 }
 
-void chunk_list_remove(ChunkList *list, u32 index) {
+ssize_t chunk_list_remove(ChunkList *list, u32 index) {
 	u32 length = list->length;
 	for (u32 i = index + 1; i < length; ++i) {
 		list->chunks[i-1] = list->chunks[i];
 	}
-	sys_munmap(&list->chunks[length - 1], list->chunks[length - 1].size);
+	ssize_t res = sys_munmap(&list->chunks[length - 1], list->chunks[length - 1].size);
+	if (res != 0) return -1;
 	list->chunks[length - 1] = (Chunk){.start = nil, .size = 0};
 	--list->length;
+	return res;
 }
 
 void *min_malloc(u32 size) {

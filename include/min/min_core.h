@@ -20,7 +20,7 @@ typedef struct {
  * @return the index of the chunk in chunk list, if the pointer is NULL or is not
  * allocated by min_malloc, it will return -1;
  */
-int chunk_list_find(void *ptr);
+i32 chunk_list_find(void *ptr);
 
 /**
  * @brief Insert a new chunk into chunk list
@@ -34,8 +34,9 @@ void chunk_list_insert(ChunkList *list, void *start, u32 size);
  * @brief Remove a chunk from chunk list by index
  * @param list  - the list where the chunk will be removed from
  * @param index - the index of the chunk to remove
+ * @return 0 when successfully remove chunk, -1 when failed to remove
  */
-void chunk_list_remove(ChunkList *list, u32 index);
+ssize_t chunk_list_remove(ChunkList *list, u32 index);
 
 /**
  * @brief Malloc memory

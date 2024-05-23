@@ -14,7 +14,7 @@ i32 min_print(const char *str) {
 
 i32 parse_format(const char *restrict format, u32 *cnt,
                  format_specifier *specs) {
-	u32 i = 0, j = 0, count = 0;
+	u32 i = 0, count = 0;
 	for (i = 0; format[i]; ++i) {
 		if (format[i] != '%') continue;
 		if (!format[i + 1]) break;

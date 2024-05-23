@@ -3,11 +3,11 @@
 #include "../../../include/min/min_def.h"
 // x8 x0 x1 x2 x3 x4 x5
 
-ssize_t sys_read(i32 fd, void *buf, u64 size) {
-	register u64   x8 __asm__("x8") = NR_READ;
-	register i32   x0 __asm__("x0") = fd;
-	register void *x1 __asm__("x1") = buf;
-	register u32   x2 __asm__("x2") = size;
+ssize_t sys_read(i32 fd, void *buf, size_t size) {
+	register u64     x8 __asm__("x8") = NR_READ;
+	register i32     x0 __asm__("x0") = fd;
+	register void   *x1 __asm__("x1") = buf;
+	register size_t  x2 __asm__("x2") = size;
 	i32 ret;
 	__asm__ __volatile__ ("svc #0"
 		: "=r" (ret)
@@ -16,11 +16,11 @@ ssize_t sys_read(i32 fd, void *buf, u64 size) {
 	return ret;
 }
 
-ssize_t sys_write(i32 fd, const void *buf, u64 size) {
+ssize_t sys_write(i32 fd, const void *buf, size_t size) {
 	register u64         x8 __asm__("x8") = NR_WRITE;
 	register i32         x0 __asm__("x0") = fd;
 	const register void *x1 __asm__("x1") = buf;
-	register u32         x2 __asm__("x2") = size;
+	register size_t      x2 __asm__("x2") = size;
 	i32 ret;
 	__asm__ __volatile__ ("svc #0"
 		: "=r" (ret)
@@ -29,15 +29,15 @@ ssize_t sys_write(i32 fd, const void *buf, u64 size) {
 	return ret;
 }
 
-void *sys_mmap(void *addr, u32 length, i32 prot,
+void *sys_mmap(void *addr, size_t length, i32 prot,
                i32 flags, i32 fd, i32 off) {
-	register u64   x8 __asm__("x8") = NR_MMAP;
-	register void *x0 __asm__("x0") = addr;
-	register u32   x1 __asm__("x1") = length;
-	register i32   x2 __asm__("x2") = prot;
-	register i32   x3 __asm__("x3") = flags;
-	register i32   x4 __asm__("x4") = fd;
-	register i32   x5 __asm__("x5") = off;
+	register u64     x8 __asm__("x8") = NR_MMAP;
+	register void   *x0 __asm__("x0") = addr;
+	register size_t  x1 __asm__("x1") = length;
+	register i32     x2 __asm__("x2") = prot;
+	register i32     x3 __asm__("x3") = flags;
+	register i32     x4 __asm__("x4") = fd;
+	register i32     x5 __asm__("x5") = off;
 	void *ret;
 	__asm__ __volatile__ ("svc #0"
 		: "=r" (ret)
@@ -46,10 +46,10 @@ void *sys_mmap(void *addr, u32 length, i32 prot,
 	return ret;
 }
 
-ssize_t sys_munmap(void *addr, u32 length) {
-	register u64   x8 __asm__("x8") = NR_MUNMAP;
-	register void *x0 __asm__("x0") = addr;
-	register u32   x1 __asm__("x1") = length;
+ssize_t sys_munmap(void *addr, size_t length) {
+	register u64     x8 __asm__("x8") = NR_MUNMAP;
+	register void   *x0 __asm__("x0") = addr;
+	register size_t  x1 __asm__("x1") = length;
 	i32 ret;
 	__asm__ __volatile__ ("svc #0"
 		: "=r" (ret)
@@ -71,11 +71,11 @@ ssize_t sys_socket(i32 domain, i32 type, i32 protocol) {
 	return ret;
 }
 
-ssize_t sys_bind(i32 sockfd, sockaddr *my_addr, i32 addrlen) {
+ssize_t sys_bind(i32 sockfd, sockaddr *my_addr, ssize_t addrlen) {
 	register u64       x8 __asm__("x8") = NR_SOCKET;
 	register i32       x0 __asm__("x0") = sockfd;
 	register sockaddr *x1 __asm__("x1") = my_addr;
-	register i32       x2 __asm__("x2") = addrlen;
+	register ssize_t   x2 __asm__("x2") = addrlen;
 	ssize_t ret;
 	__asm__ __volatile__ ( "svc #0"
 		: "=r" (ret)
@@ -115,11 +115,11 @@ clock_t sys_times(tms *t) {
 	return ret;
 }
 
-ssize_t sys_getrandom(char *buf, u64 count, u32 flags) {
-	register u64   x8 __asm__("x8") = NR_GETRANDOM;
-	register char *x0 __asm__("x0") = buf;
-	register u64   x1 __asm__("x1") = count;
-	register u32   x2 __asm__("x2") = flags;
+ssize_t sys_getrandom(char *buf, size_t count, u32 flags) {
+	register u64     x8 __asm__("x8") = NR_GETRANDOM;
+	register char   *x0 __asm__("x0") = buf;
+	register size_t  x1 __asm__("x1") = count;
+	register u32     x2 __asm__("x2") = flags;
 	i32 ret;
 	__asm__ __volatile__ ( "svc #0"
 		: "=r" (ret)

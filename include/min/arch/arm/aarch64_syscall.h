@@ -36,18 +36,18 @@
 #define GRND_RANDOM   		((u32)2)
 #define GRND_INSECURE 		((u32)4)
 
-ssize_t sys_read(int fd, void *buf, u64 size);
+ssize_t sys_read(i32 fd, void *buf, size_t size);
 
-ssize_t sys_write(int fd, const void *buf, u64 size);
+ssize_t sys_write(i32 fd, const void *buf, size_t size);
 
-void *sys_mmap(void *addr, u32 length, i32 prot,
+void *sys_mmap(void *addr, size_t length, i32 prot,
                i32 flags, i32 fd, i32 off);
 
-ssize_t sys_munmap(void *addr, u32 length);
+ssize_t sys_munmap(void *addr, size_t length);
 
-ssize_t sys_socket(int domain, int type, int protocol);
+ssize_t sys_socket(i32 domain, i32 type, i32 protocol);
 
-ssize_t sys_bind(i32 sockfd, sockaddr *my_addr, i32 addrlen);
+ssize_t sys_bind(i32 sockfd, sockaddr *my_addr, ssize_t addrlen);
 
 void sys_exit(i32 status);
 
@@ -55,6 +55,6 @@ ssize_t sys_gettimeofday(timeval *restrict tv, timezone *restrict tz);
 
 clock_t sys_times(tms *t);
 
-ssize_t sys_getrandom(char *buf, u64 count, u32 flags);
+ssize_t sys_getrandom(char *buf, size_t count, u32 flags);
 
 #endif // AARCH64_SYSCALL_H_

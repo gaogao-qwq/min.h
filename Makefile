@@ -1,4 +1,4 @@
-.PHONY: ALL shared static clean
+.PHONY: ALL shared static install uninstall clean
 
 CC := $(shell which gcc)
 TARGET := minh
@@ -23,10 +23,7 @@ LIB_FLAGS := -nostdlib \
              -Wl,--gc-sections \
              -Wl,--build-id=none
 
-ALL: $(TESTOBJS)
-
-$(LIBOBJS): %.o: %.c
-	$(CC) -c -g -fPIC -Os $(LIB_FLAGS) -o $@ $<
+ALL: shared static test
 
 shared: $(LIBOBJS)
 	@mkdir -p $(SHARED_DIR)
@@ -35,6 +32,11 @@ shared: $(LIBOBJS)
 static: $(LIBOBJS)
 	@mkdir -p $(STATIC_DIR)
 	@ar rcs $(STATIC_DIR)/lib$(TARGET).a $^
+
+test: $(TESTOBJS)
+
+$(LIBOBJS): %.o: %.c
+	$(CC) -c -g -fPIC -Os $(LIB_FLAGS) -o $@ $<
 
 $(TESTOBJS): %.o: %.c static shared
 	@mkdir -p $(TEST_BIN_DIR)/static
@@ -46,6 +48,13 @@ $(TESTOBJS): %.o: %.c static shared
 	$(CC) $@ -L$(SHARED_DIR) -l$(TARGET) -g $(TEST_FLAGS) -o \
         $(TEST_BIN_DIR)/shared/$(shell echo $(patsubst %.c,%.out,$<) | \
         sed "s/tests\///")
+
+install:
+	@sudo cp -r include /usr
+	@sudo cp $(SHARED_DIR)/lib$(TARGET).so /usr/lib
+
+uninstall:
+	@sudo rm -r /usr/include/min.h /usr/include/min /usr/lib/lib$(TARGET).so
 
 clean:
 	@rm $(shell find -type f \( -wholename "*.o" \

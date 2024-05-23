@@ -1,5 +1,6 @@
-#include "../include/min_math.h"
-#include "../include/min_stdint.h"
+#include "../include/min/min_math.h"
+
+#include "../include/min/min_stdint.h"
 
 i32 i32abs(i32 num) {
 	if (num == I32_MIN) return I32_MAX;

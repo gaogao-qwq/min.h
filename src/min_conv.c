@@ -1,6 +1,7 @@
-#include "../include/min_conv.h"
-#include "../include/min_string.h"
-#include "../include/min_math.h"
+#include "../include/min/min_conv.h"
+
+#include "../include/min/min_string.h"
+#include "../include/min/min_math.h"
 
 i32 u32toa(u32 num, char *dst) {
 	if (dst == nil) return -1;

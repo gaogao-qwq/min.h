@@ -1,5 +1,6 @@
-#include "../include/arr.h"
-#include "../include/min_core.h"
+#include "../include/min/arr.h"
+
+#include "../include/min/min_core.h"
 
 Arr *makeArr(u32 size, u32 len) {
 	Arr *a = min_malloc(sizeof(Arr));

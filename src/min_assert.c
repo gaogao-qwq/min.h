@@ -1,8 +1,9 @@
-#include "../include/min_assert.h"
-#include "../include/min_syscall.h"
-#include "../include/min_string.h"
-#include "../include/min_conv.h"
-#include "../include/min_stdlib.h"
+#include "../include/min/min_assert.h"
+
+#include "../include/min/min_syscall.h"
+#include "../include/min/min_string.h"
+#include "../include/min/min_conv.h"
+#include "../include/min/min_stdlib.h"
 
 void min_assert_fail(const char *assertion, const char *file,
                      u32 line, const char *function) {

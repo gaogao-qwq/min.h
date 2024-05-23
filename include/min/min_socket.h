@@ -1,7 +1,7 @@
 #ifndef MIN_SOCKET_H_
 #define MIN_SOCKET_H_ 1
 
-#include "../include/min_def.h"
+#include "min_def.h"
 
 #define IPPROTO_TCP ((u32)6)
 #define UPROOTO_UDP ((u32)17)

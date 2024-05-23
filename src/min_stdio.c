@@ -1,9 +1,9 @@
-#include "../include/min_stdio.h"
+#include "../include/min/min_stdio.h"
 
-#include "../include/min_conv.h"
-#include "../include/min_stdint.h"
-#include "../include/min_string.h"
-#include "../include/min_syscall.h"
+#include "../include/min/min_conv.h"
+#include "../include/min/min_stdint.h"
+#include "../include/min/min_string.h"
+#include "../include/min/min_syscall.h"
 
 i32 min_print(const char *str) {
 	u32 len = min_strlen(str);

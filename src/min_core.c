@@ -1,7 +1,7 @@
-#include "../include/min_core.h"
+#include "../include/min/min_core.h"
 
-#include "../include/algo.h"
-#include "../include/min_syscall.h"
+#include "../include/min/algo.h"
+#include "../include/min/min_syscall.h"
 
 static ChunkList alloced_chunks = {0};
 

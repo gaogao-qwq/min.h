@@ -1,5 +1,6 @@
-#include "../include/min_string.h"
-#include "../include/algo.h"
+#include "../include/min/min_string.h"
+
+#include "../include/min/algo.h"
 
 i32 min_atoi(const char *str) {
 	if (str == nil) return -1;

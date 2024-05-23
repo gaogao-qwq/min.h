@@ -1,6 +1,6 @@
 #ifdef __loongarch__
-#include "../../../include/arch/loongarch/loongarch64_syscall.h"
-#include "../../../include/min_def.h"
+#include "../../../include/min/arch/loongarch/loongarch64_syscall.h"
+#include "../../../include/min/min_def.h"
 // a7 a0 a1 a2 a3 a4 a5
 
 ssize_t sys_read(i32 fd, void *buf, u64 size) {

@@ -1,5 +1,6 @@
-#include "../include/vec.h"
-#include "../include/min_core.h"
+#include "../include/min/vec.h"
+
+#include "../include/min/min_core.h"
 
 Vec *makeVec(u32 size, u32 len) {
 	Vec *v = min_malloc(sizeof(Vec));

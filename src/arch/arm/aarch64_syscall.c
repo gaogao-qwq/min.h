@@ -1,6 +1,6 @@
 #ifdef __aarch64__
-#include "../../../include/arch/arm/aarch64_syscall.h"
-#include "../../../include/min_def.h"
+#include "../../../include/min/arch/arm/aarch64_syscall.h"
+#include "../../../include/min/min_def.h"
 // x8 x0 x1 x2 x3 x4 x5
 
 ssize_t sys_read(i32 fd, void *buf, u64 size) {

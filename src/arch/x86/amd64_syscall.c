@@ -1,6 +1,6 @@
 #ifdef __amd64__
-#include "../../../include/arch/x86/amd64_syscall.h"
-#include "../../../include/min_def.h"
+#include "../../../include/min/arch/x86/amd64_syscall.h"
+#include "../../../include/min/min_def.h"
 // rax rdi rsi rdx r10 r8 r9
 
 ssize_t sys_read(i32 fd, void *buf, u64 size) {

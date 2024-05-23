@@ -2,6 +2,7 @@
 
 #include "../include/min/algo.h"
 #include "../include/min/min_syscall.h"
+#include "../include/min/min_assert.h"
 
 static ChunkList alloced_chunks = {0};
 
@@ -33,12 +34,12 @@ void chunk_list_insert(ChunkList *list, void *start, u32 size) {
 }
 
 ssize_t chunk_list_remove(ChunkList *list, u32 index) {
+	ssize_t res = sys_munmap(list->chunks[index].start, list->chunks[index].size / 4);
+	if (res != 0) return res;
 	u32 length = list->length;
 	for (u32 i = index + 1; i < length; ++i) {
-		list->chunks[i-1] = list->chunks[i];
+		list->chunks[i - 1] = list->chunks[i];
 	}
-	ssize_t res = sys_munmap(&list->chunks[length - 1], list->chunks[length - 1].size);
-	if (res != 0) return -1;
 	list->chunks[length - 1] = (Chunk){.start = nil, .size = 0};
 	--list->length;
 	return res;
@@ -58,9 +59,11 @@ ChunkList *bump_alloced_chunks() {
 }
 
 void min_free(void *ptr) {
+	if (ptr == nil) return;
 	i32 index = chunk_list_find(ptr);
-	if (index < 0) return;
-	chunk_list_remove(&alloced_chunks, index);
+	min_assert(index >= 0);
+	ssize_t res = chunk_list_remove(&alloced_chunks, index);
+	min_assert(res == 0);
 }
 
 void min_collect() {}

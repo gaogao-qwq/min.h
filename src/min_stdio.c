@@ -1,6 +1,7 @@
 #include "../include/min/min_stdio.h"
 
 #include "../include/min/min_conv.h"
+#include "../include/min/min_core.h"
 #include "../include/min/min_stdint.h"
 #include "../include/min/min_string.h"
 #include "../include/min/min_syscall.h"
@@ -30,6 +31,9 @@ i32 parse_format(const char *restrict format, u32 *cnt,
 			specs[count].conv_type = CONVTYPE_STRING;
 			specs[count++].loc = i++;
 			continue;
+		} else if (format[i + 1] == 'p') {
+			specs[count].conv_type = CONVTYPE_POINTER;
+			specs[count++].loc = i++;
 		}
 	}
 	*cnt = count;
@@ -47,7 +51,7 @@ i32 _min_sprintf(const char *restrict format, char *str,
 				str[k++] = '%';
 			} else if (specs[j].conv_type == CONVTYPE_SIGNED_DECIMAL) {
 				++i;
-				char t[11], *pt = t;
+				char t[12], *pt = t;
 				i32toa(__builtin_va_arg(argp, i32), t);
 				while (*pt) {
 					str[k] = *pt;
@@ -56,7 +60,18 @@ i32 _min_sprintf(const char *restrict format, char *str,
 			} else if (specs[j].conv_type == CONVTYPE_STRING) {
 				++i;
 				char *t = __builtin_va_arg(argp, char *);
-				min_memcpy(str + k, t, min_strlen(t));
+				while (*t) {
+					str[k] = *t;
+					++t, ++k;
+				}
+			} else if (specs[j].conv_type == CONVTYPE_POINTER) {
+				++i;
+				char t[20], *pt = t;
+				u64tohex(__builtin_va_arg(argp, u64), t);
+				while (*pt) {
+					str[k] = *pt;
+					++k, ++pt;
+				}
 			}
 			++j;
 		} else {
@@ -64,6 +79,7 @@ i32 _min_sprintf(const char *restrict format, char *str,
 		}
 		++i;
 	}
+	str[k] = '\0';
 	return 0;
 }
 

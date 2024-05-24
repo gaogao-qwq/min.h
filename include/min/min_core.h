@@ -28,7 +28,7 @@ i32 chunk_list_find(void *ptr);
  * @param start - the pointer pointed to the insert chunk
  * @param size  - the size of the insert chunk
  */
-void chunk_list_insert(ChunkList *list, void *start, u32 size);
+void chunk_list_insert(ChunkList *list, void *start, size_t size);
 
 /**
  * @brief Remove a chunk from chunk list by index
@@ -44,7 +44,7 @@ ssize_t chunk_list_remove(ChunkList *list, u32 index);
  * @return the pointer that pointed to the start of allocated bytes, if size is 0 or
  *         program reach maximum heap capacity, it will return nil.
  */
-void *min_malloc(u32 size);
+void *min_malloc(size_t size);
 
 /**
  * @brief Get allocated chunk list

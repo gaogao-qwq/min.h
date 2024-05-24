@@ -10,7 +10,7 @@ static ChunkList alloced_chunks = {0};
 i32 chunk_list_find(void *ptr) {
 	u32 l = 0, r = alloced_chunks.length;
 	while (l < r) {
-		u32 idx = (l + r) / 2;
+		size_t idx = (l + r) / 2;
 		if (ptr < alloced_chunks.chunks[idx].start)
 			r = idx;
 		else if (ptr > alloced_chunks.chunks[idx].start)
@@ -22,10 +22,10 @@ i32 chunk_list_find(void *ptr) {
 }
 
 // INFO: O(N)
-void chunk_list_insert(ChunkList *list, void *start, u32 size) {
+void chunk_list_insert(ChunkList *list, void *start, size_t size) {
 	if (list->length >= CHUNK_LIST_CAP) return;
 	list->chunks[list->length] = (Chunk){.start = start, .size = size};
-	for (u32 i = list->length;
+	for (size_t i = list->length;
 			i > 0 && list->chunks[i].start < list->chunks[i-1].start;
 			--i) {
 		min_swap(&list->chunks[i], &list->chunks[i-1], sizeof list->chunks[i]);
@@ -36,8 +36,8 @@ void chunk_list_insert(ChunkList *list, void *start, u32 size) {
 ssize_t chunk_list_remove(ChunkList *list, u32 index) {
 	ssize_t res = sys_munmap(list->chunks[index].start, list->chunks[index].size / 4);
 	if (res != 0) return res;
-	u32 length = list->length;
-	for (u32 i = index + 1; i < length; ++i) {
+	size_t length = list->length;
+	for (size_t i = index + 1; i < length; ++i) {
 		list->chunks[i - 1] = list->chunks[i];
 	}
 	list->chunks[length - 1] = (Chunk){.start = nil, .size = 0};
@@ -45,7 +45,7 @@ ssize_t chunk_list_remove(ChunkList *list, u32 index) {
 	return res;
 }
 
-void *min_malloc(u32 size) {
+void *min_malloc(size_t size) {
 	if (!size || alloced_chunks.length >= CHUNK_LIST_CAP) return nil;
 	void *ptr = sys_mmap(nil, size, PROT_READ | PROT_WRITE,
 					     MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);

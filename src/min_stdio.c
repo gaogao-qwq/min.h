@@ -27,6 +27,9 @@ i32 parse_format(const char *restrict format, u32 *cnt,
 			specs[count].conv_type = CONVTYPE_SIGNED_DECIMAL;
 			specs[count++].loc = i++;
 			continue;
+		} else if (format[i + 1] == 'u') {
+			specs[count].conv_type = CONVTYPE_UNSIGNED_DECIMAL;
+			specs[count++].loc = i++;
 		} else if (format[i + 1] == 's') {
 			specs[count].conv_type = CONVTYPE_STRING;
 			specs[count++].loc = i++;
@@ -51,8 +54,16 @@ i32 _min_sprintf(const char *restrict format, char *str,
 				str[k++] = '%';
 			} else if (specs[j].conv_type == CONVTYPE_SIGNED_DECIMAL) {
 				++i;
-				char t[12], *pt = t;
-				i32toa(__builtin_va_arg(argp, i32), t);
+				char t[24], *pt = t;
+				i64toa(__builtin_va_arg(argp, i64), t);
+				while (*pt) {
+					str[k] = *pt;
+					++pt, ++k;
+				}
+			} else if (specs[j].conv_type == CONVTYPE_UNSIGNED_DECIMAL) {
+				++i;
+				char t[24], *pt = t;
+				u64toa(__builtin_va_arg(argp, u64), t);
 				while (*pt) {
 					str[k] = *pt;
 					++pt, ++k;
@@ -66,7 +77,7 @@ i32 _min_sprintf(const char *restrict format, char *str,
 				}
 			} else if (specs[j].conv_type == CONVTYPE_POINTER) {
 				++i;
-				char t[20], *pt = t;
+				char t[24], *pt = t;
 				u64tohex(__builtin_va_arg(argp, u64), t);
 				while (*pt) {
 					str[k] = *pt;

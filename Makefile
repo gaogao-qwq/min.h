@@ -49,7 +49,7 @@ $(TESTOBJS): %.o: %.c static shared
         $(TEST_BIN_DIR)/shared/$(shell echo $(patsubst %.c,%.out,$<) | \
         sed "s/tests\///")
 
-install:
+install: shared
 	@sudo cp -r include /usr
 	@sudo cp $(SHARED_DIR)/lib$(TARGET).so /usr/lib
 

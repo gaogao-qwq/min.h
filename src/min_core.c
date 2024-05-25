@@ -48,7 +48,7 @@ ssize_t chunk_list_remove(ChunkList *list, u32 index) {
 void *min_malloc(size_t size) {
 	if (!size || alloced_chunks.length >= CHUNK_LIST_CAP) return nil;
 	void *ptr = sys_mmap(nil, size, PROT_READ | PROT_WRITE,
-					     MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
+                         MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
 	if (*(i32 *)ptr == -1) return nil;
 	chunk_list_insert(&alloced_chunks, ptr, size);
 	return ptr;

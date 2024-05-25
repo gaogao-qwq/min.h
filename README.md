@@ -12,7 +12,7 @@ for holding stuff.
 > [!NOTE]
 > Make sure to run `make clean` before you change compile options
 
-### Build (Only work on amd64, loongarch64 GNU/Linux, perhaps)
+### Build (Only work on amd64, aarch64, loongarch64 GNU/Linux)
 
 ```sh
 make

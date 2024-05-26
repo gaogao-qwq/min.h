@@ -121,3 +121,18 @@ i32 min_printf(const char *restrict format, ...) {
 	sys_write(STDOUT_FILENO, buf, min_strlen(buf));
 	return res;
 }
+
+i32 min_errorf(const char *restrict format, ...) {
+	i32 res;
+	u32 cnt = min_strlen(format);
+	char buf[U16_MAX];
+	format_specifier specs[cnt];
+	__builtin_va_list argp;
+
+	parse_format(format, &cnt, specs);
+	__builtin_va_start(argp, format);
+	res = _min_sprintf(format, buf, specs, cnt, argp);
+	__builtin_va_end(argp);
+	sys_write(STDERR_FILENO, buf, min_strlen(buf));
+	return res;
+}

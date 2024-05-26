@@ -33,4 +33,6 @@ i32 min_sprintf(char *buf, const char *fmt, ...);
 
 i32 min_printf(const char *fmt, ...);
 
+i32 min_errorf(const char *fmt, ...);
+
 #endif // MIN_STDIO_H_

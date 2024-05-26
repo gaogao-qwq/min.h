@@ -1,6 +1,6 @@
-#include "min_syscall.h"
 #ifndef MIN_ASSERT_H_
 #define MIN_ASSERT_H_ 1
+#include "min_def.h"
 
 void min_assert_fail(const char* assertion, const char *file,
                      u32 line, const char *function);

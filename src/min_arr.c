@@ -1,4 +1,4 @@
-#include "../include/min/arr.h"
+#include "../include/min/min_arr.h"
 
 #include "../include/min/min_core.h"
 

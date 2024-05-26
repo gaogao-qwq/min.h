@@ -1,4 +1,4 @@
-#include "../include/min/vec.h"
+#include "../include/min/min_vec.h"
 
 #include "../include/min/min_core.h"
 

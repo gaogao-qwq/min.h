@@ -1,5 +1,5 @@
-#ifndef ALGO_H_
-#define ALGO_H_
+#ifndef MIN_ALGO_H_
+#define MIN_ALGO_H_
 #include "min_def.h"
 
 #define RNSEED_LEN 4
@@ -47,4 +47,4 @@ void *min_bsearch(const void *key, const void *base,
 void min_qsort(void *base, u32 nmemb, u32 size,
                compar_t compar);
 
-#endif // ALGO_H_
+#endif // MIN_ALGO_H_

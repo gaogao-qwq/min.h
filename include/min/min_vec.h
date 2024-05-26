@@ -1,5 +1,5 @@
-#ifndef VEC_CORE_H_
-#define VEC_VORE_H_ 1
+#ifndef MIN_VEC_H
+#define MIN_VEC_H_ 1
 #include "min_def.h"
 
 typedef struct Vec {
@@ -9,4 +9,4 @@ typedef struct Vec {
 } Vec;
 Vec *makeVec(u32 size, u32 len);
 
-#endif // VEC_VORE_H_
+#endif // MIN_VEC_H_

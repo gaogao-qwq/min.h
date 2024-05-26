@@ -1,11 +1,9 @@
-#include "../include/min/algo.h"
+#include "../include/min/min_algo.h"
 
 #include "../include/min/min_syscall.h"
 #include "../include/min/min_string.h"
 
-#ifdef NOSTDLIB_BUILD
 static char buf[RNSEED_LEN];
-#endif
 
 void min_swap(void *a, void *b, u32 size) {
 	if (a == b) return;

@@ -3,8 +3,6 @@
 #include "../include/min/min_syscall.h"
 #include "../include/min/min_string.h"
 
-static char buf[RNSEED_LEN];
-
 void min_swap(void *a, void *b, u32 size) {
 	if (a == b) return;
 	char *p = a, *q = b;

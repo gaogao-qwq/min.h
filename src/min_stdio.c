@@ -1,10 +1,10 @@
 #include "../include/min/min_stdio.h"
 
 #include "../include/min/min_conv.h"
-#include "../include/min/min_core.h"
 #include "../include/min/min_stdint.h"
 #include "../include/min/min_string.h"
 #include "../include/min/min_syscall.h"
+// clang-format off
 
 i32 min_print(const char *str) {
 	u32 len = min_strlen(str);
@@ -22,18 +22,26 @@ i32 parse_format(const char *restrict format, u32 *cnt,
 		if (format[i + 1] == '%') {
 			specs[count].conv_type = CONVTYPE_PERCENT_LITERAL;
 			specs[count++].loc = i++;
-			continue;
+		} else if (format[i + 1] == 'l') {
+			if (!format[i + 2]) break;
+			if (format[i + 2] == 'd') {
+				specs[count].conv_type = CONVTYPE_SIGNED_LONG_DECIMAL;
+				specs[count++].loc = i;
+				i += 2;
+			} else if (format[i + 2] == 'u') {
+				specs[count].conv_type = CONVTYPE_UNSIGNED_LONG_DECIMAL;
+				specs[count++].loc = i;
+				i += 2;
+			}
 		} else if (format[i + 1] == 'd') {
 			specs[count].conv_type = CONVTYPE_SIGNED_DECIMAL;
 			specs[count++].loc = i++;
-			continue;
 		} else if (format[i + 1] == 'u') {
 			specs[count].conv_type = CONVTYPE_UNSIGNED_DECIMAL;
 			specs[count++].loc = i++;
 		} else if (format[i + 1] == 's') {
 			specs[count].conv_type = CONVTYPE_STRING;
 			specs[count++].loc = i++;
-			continue;
 		} else if (format[i + 1] == 'p') {
 			specs[count].conv_type = CONVTYPE_POINTER;
 			specs[count++].loc = i++;
@@ -54,6 +62,14 @@ i32 _min_sprintf(const char *restrict format, char *str,
 				str[k++] = '%';
 			} else if (specs[j].conv_type == CONVTYPE_SIGNED_DECIMAL) {
 				++i;
+				char t[12], *pt = t;
+				i32toa(__builtin_va_arg(argp, i32), t);
+				while (*pt) {
+					str[k] = *pt;
+					++pt, ++k;
+				}
+			} else if (specs[j].conv_type == CONVTYPE_SIGNED_LONG_DECIMAL) {
+				i += 2;
 				char t[24], *pt = t;
 				i64toa(__builtin_va_arg(argp, i64), t);
 				while (*pt) {
@@ -62,6 +78,14 @@ i32 _min_sprintf(const char *restrict format, char *str,
 				}
 			} else if (specs[j].conv_type == CONVTYPE_UNSIGNED_DECIMAL) {
 				++i;
+				char t[12], *pt = t;
+				u32toa(__builtin_va_arg(argp, u32), t);
+				while (*pt) {
+					str[k] = *pt;
+					++pt, ++k;
+				}
+			} else if (specs[j].conv_type == CONVTYPE_UNSIGNED_LONG_DECIMAL) {
+				i += 2;
 				char t[24], *pt = t;
 				u64toa(__builtin_va_arg(argp, u64), t);
 				while (*pt) {

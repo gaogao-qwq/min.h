@@ -48,7 +48,7 @@ i32 _min_sprintf(const char *restrict format, char *str,
 	if (str == nil) return -1;
 	u32 i = 0, j = 0, k = 0;
 	while (format[i]) {
-		if (specs[j].loc == i) {
+		if (specs[j].loc == i && j < cnt) {
 			if (specs[j].conv_type == CONVTYPE_PERCENT_LITERAL) {
 				++i;
 				str[k++] = '%';
@@ -97,7 +97,7 @@ i32 _min_sprintf(const char *restrict format, char *str,
 i32 min_sprintf(char *buf, const char *restrict format, ...) {
 	i32 res;
 	u32 cnt = min_strlen(format);
-	format_specifier specs[cnt];
+	format_specifier *specs = min_malloc(sizeof(format_specifier) * cnt);
 	__builtin_va_list argp;
 
 	parse_format(format, &cnt, specs);

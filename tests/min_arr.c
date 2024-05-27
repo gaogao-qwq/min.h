@@ -1,5 +1,12 @@
 #include "../include/min.h"
 
+i32 compar(const void *p1, const void *p2) {
+	i32 a = *((i32 *)p1), b = *((i32 *)p2);
+	if (a > b) return 1;
+	else if (a < b) return -1;
+	else return 0;
+}
+
 i32 main(void) {
 	Arr arr = makeArr(sizeof(i32), 10);
 	i32 a0 = 0, a1 = 1;
@@ -16,8 +23,19 @@ i32 main(void) {
 			min_printf("%d\n", *((i32 *)arrGet(arr, i)));
 		}
 	}
-	min_printf("After reverse:\n");
+
+	min_print("After reverse:\n");
 	arrReverse(arr);
+	for (size_t i = 0; i < arr.len; ++i) {
+		if (i != arr.len - 1) {
+			min_printf("%d, ", *((i32 *)arrGet(arr, i)));
+		} else {
+			min_printf("%d\n", *((i32 *)arrGet(arr, i)));
+		}
+	}
+
+	arrSort(arr, compar);
+	min_print("After sort:\n");
 	for (size_t i = 0; i < arr.len; ++i) {
 		if (i != arr.len - 1) {
 			min_printf("%d, ", *((i32 *)arrGet(arr, i)));

@@ -45,3 +45,9 @@ i32 arrReverse(Arr arr) {
 	return 0;
 }
 
+i32 arrSort(Arr arr, compar_t compar) {
+	if (arr.data == nil || compar == nil) return -1;
+	min_qsort(arr.data, arr.len, arr.size, compar);
+	return 0;
+}
+

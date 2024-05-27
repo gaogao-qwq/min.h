@@ -26,7 +26,7 @@ ifeq ($(ARCH), x86_64)
 else ifeq ($(ARCH), aarch64)
 	ARCH_SUFFIX := _aarch64
 else ifeq ($(ARCH), loongarch64)
-	ARCH_SUFFIX := _la64
+	ARCH_SUFFIX := _loong64
 endif
 
 ALL: $(OBJS)

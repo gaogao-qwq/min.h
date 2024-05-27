@@ -97,7 +97,7 @@ i32 _min_sprintf(const char *restrict format, char *str,
 i32 min_sprintf(char *buf, const char *restrict format, ...) {
 	i32 res;
 	u32 cnt = min_strlen(format);
-	format_specifier *specs = min_malloc(sizeof(format_specifier) * cnt);
+	format_specifier specs[cnt];
 	__builtin_va_list argp;
 
 	parse_format(format, &cnt, specs);

@@ -1,12 +1,18 @@
 #ifndef MIN_ARR_H_
 #define MIN_ARR_H_
 #include "min_def.h"
+// clang-format off
 
 typedef struct Arr {
-	void 	*data;
-	u32  	len;
+	void   *data;
+	size_t  size;
+	size_t  len;
 } Arr;
-Arr *makeArr(u32 size, u32 len);
-Arr *makeEmptyArr();
+
+Arr makeArr(size_t size, size_t len);
+Arr makeEmptyArr(size_t size);
+i32 arrSet(Arr arr, size_t index, const void *value);
+void *arrGet(Arr arr, size_t index);
+i32 arrReverse(Arr arr);
 
 #endif // MIN_ARR_H_

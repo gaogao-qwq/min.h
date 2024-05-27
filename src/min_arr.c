@@ -51,3 +51,10 @@ i32 arrSort(Arr arr, compar_t compar) {
 	return 0;
 }
 
+void arrFree(Arr *arr) {
+	min_free(arr->data);
+	arr->data = nil;
+	arr->size = 0;
+	arr->len = 0;
+}
+

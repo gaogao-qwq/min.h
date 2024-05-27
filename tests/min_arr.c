@@ -43,5 +43,6 @@ i32 main(void) {
 			min_printf("%d\n", *((i32 *)arrGet(arr, i)));
 		}
 	}
+	arrFree(&arr);
 	return 0;
 }

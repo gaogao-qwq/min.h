@@ -16,5 +16,6 @@ i32 arrSet(Arr arr, size_t index, const void *value);
 void *arrGet(Arr arr, size_t index);
 i32 arrReverse(Arr arr);
 i32 arrSort(Arr arr, compar_t compar);
+void arrFree(Arr *arr);
 
 #endif // MIN_ARR_H_

@@ -24,7 +24,7 @@ Arr makeEmptyArr(size_t size) {
 }
 
 i32 arrSet(Arr arr, size_t index, const void *value) {
-	if (arr.data == nil || index > arr.len) return -1;
+	if (arr.data == nil || index >= arr.len) return -1;
 	min_memcpy(arr.data + index * arr.size, value, arr.size);
 	return 0;
 }

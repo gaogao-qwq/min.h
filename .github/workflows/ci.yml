@@ -16,5 +16,5 @@ jobs:
     - name: make
       run: make
     - name: make-example
-      working-directory: ./example
+      working-directory: example
       run: make

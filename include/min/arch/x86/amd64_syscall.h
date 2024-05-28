@@ -13,7 +13,6 @@
 #define NR_EXIT         		((u64)60)
 #define NR_GETTIMEOFDAY 		((u64)96)
 #define NR_TIMES        		((u64)100)
-#define NR_TIME         		((u64)201)
 #define NR_GETRANDOM    		((u64)318)
 
 #ifndef _STDLIB_H

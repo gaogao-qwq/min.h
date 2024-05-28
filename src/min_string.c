@@ -114,8 +114,7 @@ u32 min_strlen(const char *str) {
 }
 
 void min_memcpy(void *dst, const void *src, u32 size) {
-	char *p = dst;
 	for (u32 i = 0; i < size; ++i) {
-		*(p + i) = *(char *)(src + i);
+		*(char *)(dst + i) = *(char *)(src + i);
 	}
 }

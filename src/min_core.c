@@ -1,6 +1,6 @@
 #include "../include/min/min_core.h"
 
-#include "../include/min/algo.h"
+#include "../include/min/min_algo.h"
 #include "../include/min/min_syscall.h"
 #include "../include/min/min_assert.h"
 

@@ -21,10 +21,13 @@
 	#define EXIT_SUCCESS 		((u32)0)
 #endif
 
+#ifndef _UNISTD_H
 #define STDIN_FILENO  		((u32)0)
 #define STDOUT_FILENO 		((u32)1)
 #define STDERR_FILENO 		((u32)2)
+#endif
 
+#ifndef _SYS_MMAN_H
 #define PROT_READ  		((u32)1)
 #define PROT_WRITE 		((u32)2)
 #define PROT_EXEC  		((u32)4)
@@ -34,10 +37,13 @@
 #define MAP_PRIVATE         		((u32)2)
 #define MAP_SHARED_VALIDATE 		((u32)3)
 #define MAP_ANONYMOUS       		((u32)32)
+#endif
 
+#ifndef _SYS_RANDOM_H
 #define GRND_NONBLOCK 		((u32)1)
 #define GRND_RANDOM   		((u32)2)
 #define GRND_INSECURE 		((u32)4)
+#endif
 
 ssize_t sys_read(i32 fd, void *buf, size_t size);
 

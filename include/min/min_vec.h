@@ -7,11 +7,15 @@
 
 typedef struct Vec {
 	void   *data;
+	size_t  size;
 	size_t  len;
 	size_t  capacity;
 } Vec;
 
 Vec makeVec(size_t size, size_t len);
 Vec makeEmptyVec(size_t size);
+i32 vecSet(Vec vec, size_t index, const void *value);
+void *vecGet(Vec vec, size_t index);
+void vecAppend(Vec *vec, void *value);
 
 #endif // MIN_VEC_H_

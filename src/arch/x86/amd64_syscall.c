@@ -1,7 +1,9 @@
 #ifdef __amd64__
 #include "../../../include/min/arch/x86/amd64_syscall.h"
+
 #include "../../../include/min/min_def.h"
 // rax rdi rsi rdx r10 r8 r9
+// clang-format off
 
 ssize_t sys_read(i32 fd, void *buf, size_t size) {
 	register u64         rax __asm__("rax") = NR_READ;
@@ -59,6 +61,31 @@ ssize_t sys_munmap(void *addr, size_t length) {
 		: "r" (rax), "r" (rdi), "r" (rsi)
 		: "rcx", "r11", "memory"
 	);
+	return ret;
+}
+
+void *sys_mremap(void *old_addr, size_t old_size,
+             size_t new_size, i32 flags, void *new_address) {
+	register u64     rax __asm__("rax") = NR_MREMAP;
+	register void   *rdi __asm__("rdi") = old_addr;
+	register size_t  rsi __asm__("rsi") = old_size;
+	register size_t  rdx __asm__("rdx") = new_size;
+	register i32     r10 __asm__("r10") = flags;
+	register void   *r8  __asm__("r8")  = new_address;
+	void *ret;
+	if (r8 == nil) {
+		__asm__ volatile ( "syscall"
+			: "=a" (ret)
+			: "r" (rax), "r" (rdi), "r" (rsi), "r" (rdx), "r" (r10), "r" (r8)
+			: "rcx", "r11", "memory"
+		);
+	} else {
+		__asm__ volatile ( "syscall"
+			: "=a" (ret)
+			: "r" (rax), "r" (rdi), "r" (rsi), "r" (rdx), "r" (r10)
+			: "rcx", "r11", "memory"
+		);
+	}
 	return ret;
 }
 

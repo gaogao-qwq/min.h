@@ -58,6 +58,29 @@ ssize_t sys_munmap(void *addr, size_t length) {
 	return ret;
 }
 
+void *sys_mremap(void *old_addr, size_t old_size,
+             size_t new_size, i32 flags, void *new_address) {
+	register u64     x8 __asm__("x8") = NR_MREMAP;
+	register void   *x0 __asm__("x0") = old_addr;
+	register size_t  x1 __asm__("x1") = old_size;
+	register size_t  x2 __asm__("x2") = new_size;
+	register i32     x3 __asm__("x3") = flags;
+	register void   *x4 __asm__("x4")  = new_address;
+	void *ret;
+	if (x4 == nil) {
+		__asm__ __volatile__ ( "svc #0"
+			: "=r" (ret)
+			: "r" (x8), "r" (x0), "r" (x1), "r" (x2), "r" (x3), "r" (x4)
+		);
+	} else {
+		__asm__ __volatile__ ( "svc #0"
+			: "=r" (ret)
+			: "r" (x8), "r" (x0), "r" (x1), "r" (x2), "r" (x3)
+		);
+	}
+	return ret;
+}
+
 ssize_t sys_socket(i32 domain, i32 type, i32 protocol) {
 	register u64 x8 __asm__("x8") = NR_SOCKET;
 	register i32 x0 __asm__("x0") = domain;
@@ -102,6 +125,7 @@ ssize_t sys_gettimeofday(timeval *restrict tv, timezone *restrict tz) {
 		: "=r" (ret)
 		: "r" (x8), "r" (x0), "r" (x1)
 	);
+	return ret;
 }
 
 clock_t sys_times(tms *t) {

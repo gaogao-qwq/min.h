@@ -1,8 +1,9 @@
 #include "../include/min/min_core.h"
 
 #include "../include/min/min_algo.h"
-#include "../include/min/min_syscall.h"
 #include "../include/min/min_assert.h"
+#include "../include/min/min_syscall.h"
+// clang-format off
 
 static ChunkList alloced_chunks = {0};
 
@@ -52,6 +53,16 @@ void *min_malloc(size_t size) {
 	if (*(i32 *)ptr == -1) return nil;
 	chunk_list_insert(&alloced_chunks, ptr, size);
 	return ptr;
+}
+
+void *min_realloc(void *ptr, size_t size) {
+	i32 idx = chunk_list_find(ptr);
+	if (idx == -1) return nil;
+	void *new_address = sys_mremap(ptr, alloced_chunks.chunks[idx].size,
+                                   size, MREMAP_MAYMOVE, nil);
+	chunk_list_remove(&alloced_chunks, idx);
+	chunk_list_insert(&alloced_chunks, new_address, size);
+	return new_address;
 }
 
 ChunkList *bump_alloced_chunks() {

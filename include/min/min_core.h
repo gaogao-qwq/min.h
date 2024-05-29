@@ -46,6 +46,9 @@ ssize_t chunk_list_remove(ChunkList *list, u32 index);
  */
 void *min_malloc(size_t size);
 
+
+void *min_realloc(void *ptr, size_t size);
+
 /**
  * @brief Get allocated chunk list
  * @return the allocated chunk list

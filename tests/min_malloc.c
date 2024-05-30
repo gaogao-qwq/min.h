@@ -2,7 +2,8 @@
 
 i32 main(void) {
 	min_print("Testing min_malloc()...\n");
-	int *i32arr = min_malloc(10 * sizeof(i32));
+	i32 *i32arr = min_malloc(10 * sizeof(i32));
+	u32 *u32arr = min_calloc(1000, sizeof(u32));
 	i64 *i64arr = min_malloc(10 * sizeof(i64));
 	char *str = min_malloc(16 * sizeof(char));
 

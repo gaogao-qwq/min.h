@@ -46,6 +46,7 @@ ssize_t chunk_list_remove(ChunkList *list, u32 index);
  */
 void *min_malloc(size_t size);
 
+void *min_calloc(size_t nmemb, size_t size);
 
 void *min_realloc(void *ptr, size_t size);
 

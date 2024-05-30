@@ -50,7 +50,20 @@ void *min_malloc(size_t size) {
 	if (!size || alloced_chunks.length >= CHUNK_LIST_CAP) return nil;
 	void *ptr = sys_mmap(nil, size, PROT_READ | PROT_WRITE,
                          MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
-	if (*(i32 *)ptr == -1) return nil;
+	if (ptr == ((void *) -1)) return nil;
+	chunk_list_insert(&alloced_chunks, ptr, size);
+	return ptr;
+}
+
+void *min_calloc(size_t nmemb, size_t size) {
+	size *= nmemb;
+	if (!size || alloced_chunks.length >= CHUNK_LIST_CAP) return nil;
+	void * ptr = sys_mmap(nil, size, PROT_READ | PROT_WRITE,
+	                      MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
+	if (ptr == ((void *) -1)) return nil;
+	for (size_t i = 0; i < size; ++i) {
+		(*(char *)ptr) ^= (*(char *)ptr);
+	}
 	chunk_list_insert(&alloced_chunks, ptr, size);
 	return ptr;
 }

@@ -35,7 +35,7 @@ void chunk_list_insert(ChunkList *list, void *start, size_t size) {
 }
 
 ssize_t chunk_list_remove(ChunkList *list, u32 index) {
-	ssize_t res = sys_munmap(list->chunks[index].start, list->chunks[index].size / 4);
+	ssize_t res = sys_munmap(list->chunks[index].start, list->chunks[index].size);
 	if (res != 0) return res;
 	size_t length = list->length;
 	for (size_t i = index + 1; i < length; ++i) {
@@ -73,8 +73,11 @@ void *min_realloc(void *ptr, size_t size) {
 	if (idx == -1) return nil;
 	void *new_address = sys_mremap(ptr, alloced_chunks.chunks[idx].size,
                                    size, MREMAP_MAYMOVE, nil);
-	chunk_list_remove(&alloced_chunks, idx);
-	chunk_list_insert(&alloced_chunks, new_address, size);
+	if (new_address != ptr) {
+		chunk_list_remove(&alloced_chunks, idx);
+		chunk_list_insert(&alloced_chunks, new_address, size);
+		ptr = new_address;
+	}
 	return new_address;
 }
 

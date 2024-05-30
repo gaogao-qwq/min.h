@@ -119,3 +119,12 @@ void min_memcpy(void *dst, const void *src, u32 size) {
 		*(char *)(dst + i) = *(char *)(src + i);
 	}
 }
+
+void *min_memset(void *dst, i32 ch, size_t cnt) {
+	if (dst == nil) return nil;
+	for (size_t i = 0; i < cnt; ++i) {
+		*(char *)(dst + i) = (unsigned char)ch;
+	}
+	return dst;
+}
+

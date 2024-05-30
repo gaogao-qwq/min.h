@@ -1,0 +1,11 @@
+#!/bin/sh
+
+dir="tests/bin/static/"
+
+for t in "$dir"*.out; do
+	if [ -x "$t" ]; then
+		printf "\n%s%s%s\n" "------------Start of " "$t" "------------"
+		"$t"
+		printf "\n%s%s%s\n" "------------End of " "$t" "------------"
+	fi
+done

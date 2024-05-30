@@ -38,14 +38,10 @@ void *vecGet(Vec vec, size_t index) {
 }
 
 void vecAppend(Vec *vec, void *value) {
-	if (vec->len + 1 >= vec->capacity) {
-		size_t newcap = vec->capacity * 2;
-		void *p = min_malloc(newcap * vec->size);
-		if (p == nil) return;
-		min_memcpy(p, vec->data, vec->size * vec->len);
-		min_free(vec->data);
-		vec->data = p;
-		vec->capacity = newcap;
+	if (vec->len + 1 > vec->capacity) {
+		vec->capacity *= 2;
+		vec->data = min_realloc(vec->data, vec->capacity * vec->size);
+		if (vec->data == nil) return;
 	}
 	min_memcpy(vec->data + vec->len * vec->size, value, vec->size);
 	++vec->len;

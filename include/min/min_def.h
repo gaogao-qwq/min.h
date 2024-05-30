@@ -17,11 +17,11 @@ typedef signed long long int   		i64;
 typedef unsigned long long int 		u64;
 typedef double                 		f64;
 
-#ifndef _STDIO_H
+#ifndef __need_size_t
 	typedef signed int   ssize_t;
 	typedef unsigned int size_t;
-	#define SSIZE_MAX    ((mssize_t)2147483647)
-	#define SIZE_MAX     ((msize_t)4294967295U)
-#endif // _STDIO_H
+	#define SSIZE_MAX    ((ssize_t)2147483647)
+	#define SIZE_MAX     ((size_t)4294967295U)
+#endif // __need_size_t
 
 #endif // MIN_DEF_H_

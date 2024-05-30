@@ -3,10 +3,10 @@
 #include "min_def.h"
 
 #ifndef _STDLIB_H
-	typedef i32 time_t;
-	typedef i32 suseconds_t;
-	typedef u32 useconds_t;
-	typedef i32 clock_t;
+	typedef i64 time_t;
+	typedef i64 suseconds_t;
+	typedef u64 useconds_t;
+	typedef i64 clock_t;
 
 	typedef struct timeval {
 		time_t      tv_sec;   /* Seconds */

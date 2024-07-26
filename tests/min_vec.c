@@ -20,11 +20,8 @@ i32 main(void) {
 		           chunks->chunks[i].start,
 		           chunks->chunks[i].size);
 	}
-	for (size_t i = 0; i < 10; ++i) {
-		min_printf("%d ", *(int *)vecGet(vec, i));
-	}
-	min_printf("\n%d\n", *(int *)vecGet(vec, 9999));
+	min_assert(*(int *)vecGet(vec, 9999) == 9999);
 	i32 t = 114514;
 	vecSet(vec, 9999, &t);
-	min_printf("%d\n", *(int *)vecGet(vec, 9999));
+	min_assert(*(int *)vecGet(vec, 9999) == t);
 }

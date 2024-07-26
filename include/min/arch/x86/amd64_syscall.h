@@ -60,7 +60,7 @@ void *sys_mmap(void *addr, size_t length, i32 prot,
 ssize_t sys_munmap(void *addr, size_t length);
 
 void *sys_mremap(void *old_addr, size_t old_size,
-             size_t new_size, i32 flags, void *new_address);
+                 size_t new_size, i32 flags, void *new_address);
 
 ssize_t sys_socket(i32 domain, i32 type, i32 protocol);
 

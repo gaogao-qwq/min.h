@@ -31,7 +31,7 @@ shared: $(LIBOBJS)
 
 static: $(LIBOBJS)
 	@mkdir -p $(STATIC_DIR)
-	@ar rcs $(STATIC_DIR)/lib$(TARGET).a $^
+	ar rcs $(STATIC_DIR)/lib$(TARGET).a $^
 
 test: $(TESTOBJS)
 

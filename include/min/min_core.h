@@ -16,6 +16,7 @@ typedef struct {
 
 /**
  * @brief Binary search allocated chunk by pointer
+ *
  * @param ptr - the pointer to find
  * @return the index of the chunk in chunk list, if the pointer is NULL or is not
  * allocated by min_malloc, it will return -1;
@@ -32,6 +33,7 @@ void chunk_list_insert(ChunkList *list, void *start, size_t size);
 
 /**
  * @brief Remove a chunk from chunk list by index
+ *
  * @param list  - the list where the chunk will be removed from
  * @param index - the index of the chunk to remove
  * @return 0 when successfully remove chunk, -1 when failed to remove
@@ -39,25 +41,41 @@ void chunk_list_insert(ChunkList *list, void *start, size_t size);
 ssize_t chunk_list_remove(ChunkList *list, u32 index);
 
 /**
- * @brief Malloc memory
+ * @brief Allocate size bytes of memory.
+ *
  * @param size - the size of byte to allocate
  * @return the pointer that pointed to the start of allocated bytes, if size is 0 or
- *         program reach maximum heap capacity, it will return nil.
+ *         program reach maximum heap capacity, it will return NULL.
  */
 void *min_malloc(size_t size);
 
+/**
+ * @brief Allocate nmemb elements of size bytes each, all initialized to 0.
+ *
+ * @param nmemb - number of elements
+ * @param size  - size of bytes
+ */
 void *min_calloc(size_t nmemb, size_t size);
 
+/**
+ * @brief Re-allocate the previously allocated block in ptr,
+ *        making the new block size bytes long.
+ *
+ * @param ptr  - the pointer pointed to the allocated block
+ * @param size - size of bytes
+ */
 void *min_realloc(void *ptr, size_t size);
 
 /**
  * @brief Get allocated chunk list
+ *
  * @return the allocated chunk list
  */
 ChunkList *bump_alloced_chunks();
 
 /**
  * @brief Free the chunk allocated by min_malloc
+ *
  * @param ptr - the pointer pointed to the chunk to be freed
  */
 void min_free(void *ptr);

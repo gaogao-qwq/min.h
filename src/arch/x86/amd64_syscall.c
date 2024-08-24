@@ -40,8 +40,8 @@ void *sys_mmap(void *addr, size_t length, i32 prot,
 	register size_t  rsi __asm__("rsi") = length;
 	register i32     rdx __asm__("rdx") = prot;
 	register i32     r10 __asm__("r10") = flags;
-	register i32     r8  __asm__("r8") = fd;
-	register i32     r9  __asm__("r9") = off;
+	register i32     r8  __asm__("r8")  = fd;
+	register i32     r9  __asm__("r9")  = off;
 	void *ret;
 	__asm__ volatile ( "syscall"
 		: "=a" (ret)

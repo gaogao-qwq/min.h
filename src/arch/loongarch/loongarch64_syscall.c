@@ -65,7 +65,7 @@ void *sys_mremap(void *old_addr, size_t old_size,
 	register size_t  a1 __asm__("a1") = old_size;
 	register size_t  a2 __asm__("a2") = new_size;
 	register i32     a3 __asm__("a3") = flags;
-	register void   *a4 __asm__("a4")  = new_address;
+	register void   *a4 __asm__("a4") = new_address;
 	void *ret;
 	if (a4 == nil) {
 		__asm__ __volatile__ ( "syscall 0x0"

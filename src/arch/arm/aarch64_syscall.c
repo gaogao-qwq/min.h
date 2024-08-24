@@ -65,7 +65,7 @@ void *sys_mremap(void *old_addr, size_t old_size,
 	register size_t  x1 __asm__("x1") = old_size;
 	register size_t  x2 __asm__("x2") = new_size;
 	register i32     x3 __asm__("x3") = flags;
-	register void   *x4 __asm__("x4")  = new_address;
+	register void   *x4 __asm__("x4") = new_address;
 	void *ret;
 	if (x4 == nil) {
 		__asm__ __volatile__ ( "svc #0"

@@ -1,96 +1,163 @@
 #include "../include/min/min_core.h"
 
-#include "../include/min/min_algo.h"
 #include "../include/min/min_assert.h"
+#include "../include/min/min_stdio.h"
 #include "../include/min/min_syscall.h"
 // clang-format off
 
-static ChunkList alloced_chunks = {0};
+#define BUCKET_CAP ((u32)101)
 
-// INFO: O(logN)
-i32 chunk_list_find(void *ptr) {
-	u32 l = 0, r = alloced_chunks.length;
-	while (l < r) {
-		size_t idx = (l + r) / 2;
-		if (ptr < alloced_chunks.chunks[idx].start)
-			r = idx;
-		else if (ptr > alloced_chunks.chunks[idx].start)
-			l = idx + 1;
-		else
-			return idx;
+typedef struct bucket_node {
+	void *base;
+	size_t size;
+	struct bucket_node *next;
+	struct bucket_node *prev;
+} bucket_node;
+
+typedef struct bucket {
+	bucket_node *nodes;
+	size_t length;
+} bucket;
+
+static bucket buckets[BUCKET_CAP];
+
+u32 _hash(void *base) {
+	u32 h = sizeof(void *);
+	const char *ptr_str = (const char *)&base;
+	size_t i;
+
+	for (i = 0; i < sizeof base; ++i) {
+		h = ((h << 5) ^ (h >> 27) ^ ptr_str[i]);
 	}
-	return -1;
+	return h % BUCKET_CAP;
 }
 
-// INFO: O(N)
-void chunk_list_insert(ChunkList *list, void *start, size_t size) {
-	if (list->length >= CHUNK_LIST_CAP) return;
-	list->chunks[list->length] = (Chunk){.start = start, .size = size};
-	for (size_t i = list->length;
-			i > 0 && list->chunks[i].start < list->chunks[i-1].start;
-			--i) {
-		min_swap(&list->chunks[i], &list->chunks[i-1], sizeof list->chunks[i]);
+bucket_node *_bucket_find(void *ptr) {
+	u32 idx = _hash(ptr);
+	bucket bucket = buckets[idx];
+	bucket_node *p = bucket.nodes;
+
+	if (!bucket.length) {
+		return nil;
 	}
-	++list->length;
+
+	while (p) {
+		if (p->base == ptr) return p;
+		p = p->next;
+	}
+
+	return nil;
 }
 
-ssize_t chunk_list_remove(ChunkList *list, u32 index) {
-	ssize_t res = sys_munmap(list->chunks[index].start, list->chunks[index].size);
-	if (res != 0) return res;
-	size_t length = list->length;
-	for (size_t i = index + 1; i < length; ++i) {
-		list->chunks[i - 1] = list->chunks[i];
+void _bucket_insert(void *start, size_t size) {
+	u32 idx = _hash(start);
+	bucket *bucket = &buckets[idx];
+	bucket_node *p = bucket->nodes;
+	bucket_node *new_node = sys_mmap(nil, sizeof(bucket_node),
+                                     PROT_READ | PROT_WRITE,
+                                     MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
+	
+	new_node->base = start;
+	new_node->size = size;
+	new_node->next = nil;
+	new_node->prev = nil;
+
+	if (!bucket->length) {
+		bucket->nodes = new_node;
+		++bucket->length;
+		return;
 	}
-	list->chunks[length - 1] = (Chunk){.start = nil, .size = 0};
-	--list->length;
+
+	while (p && p->next) {
+		p = p->next;
+	}
+
+	p->next = new_node;
+	p->next->prev = p;
+	++bucket->length;
+}
+
+ssize_t _bucket_remove(bucket_node *node) {
+	if (node == nil) return -1;
+	ssize_t res;
+	if (node->prev != nil) node->prev->next = node->next;
+	if (node->next != nil) node->next->prev = node->prev;
+	res = sys_munmap(node, sizeof(bucket_node));
 	return res;
 }
 
+void bump_alloced_bucket() {
+	bucket_node *p;
+
+	min_print("Bumping alloced memories...\n");
+	for(size_t i = 0; i < BUCKET_CAP; ++i) {
+		if (!buckets[i].length) {
+			continue;
+		}
+		p = buckets[i].nodes;
+		while (p) {
+			min_printf("[%p] size: %u\n", p->base, p->size);
+			p = p->next;
+		}
+	}
+}
+
 void *min_malloc(size_t size) {
-	if (!size || alloced_chunks.length >= CHUNK_LIST_CAP) return nil;
-	void *ptr = sys_mmap(nil, size, PROT_READ | PROT_WRITE,
-                         MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
-	if (ptr == ((void *) -1)) return nil;
-	chunk_list_insert(&alloced_chunks, ptr, size);
-	return ptr;
+	void *p = sys_mmap(nil, size, PROT_READ | PROT_WRITE,
+                       MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
+	if (p == MAP_FAILED) return nil;
+	_bucket_insert(p, size);
+	return p;
 }
 
 void *min_calloc(size_t nmemb, size_t size) {
 	size *= nmemb;
-	if (!size || alloced_chunks.length >= CHUNK_LIST_CAP) return nil;
-	void * ptr = sys_mmap(nil, size, PROT_READ | PROT_WRITE,
-	                      MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
-	if (ptr == ((void *) -1)) return nil;
+	void *p = sys_mmap(nil, size, PROT_READ | PROT_WRITE,
+	                   MAP_ANONYMOUS | MAP_PRIVATE, 0, 0);
+	if (p == MAP_FAILED) return nil;
 	for (size_t i = 0; i < size; ++i) {
-		(*(char *)ptr) ^= (*(char *)ptr);
+		(*(char *)p) ^= (*(char *)p);
 	}
-	chunk_list_insert(&alloced_chunks, ptr, size);
-	return ptr;
+	_bucket_insert(p, size);
+	return p;
 }
 
 void *min_realloc(void *ptr, size_t size) {
-	i32 idx = chunk_list_find(ptr);
-	if (idx == -1) return nil;
-	void *new_address = sys_mremap(ptr, alloced_chunks.chunks[idx].size,
-                                   size, MREMAP_MAYMOVE, nil);
-	if (new_address != ptr) {
-		chunk_list_remove(&alloced_chunks, idx);
-		chunk_list_insert(&alloced_chunks, new_address, size);
-		ptr = new_address;
-	}
-	return new_address;
-}
+	u32 idx = _hash(ptr);
+	bucket *bucket = &buckets[idx];
+	bucket_node *node = _bucket_find(ptr);
 
-ChunkList *bump_alloced_chunks() {
-	return &alloced_chunks;
+	if (node == nil) return nil;
+	void *new_address = sys_mremap(ptr, node->size,
+                                   size, MREMAP_MAYMOVE, nil);
+
+	if (new_address != ptr) {
+		_bucket_remove(node);
+		_bucket_insert(new_address, size);
+		if (--bucket->length) bucket->nodes = nil;
+		ptr = new_address;
+	} else {
+		node->size = size;
+	}
+
+	return new_address;
 }
 
 void min_free(void *ptr) {
 	if (ptr == nil) return;
-	i32 index = chunk_list_find(ptr);
-	min_assert(index >= 0);
-	ssize_t res = chunk_list_remove(&alloced_chunks, index);
+
+	ssize_t res;
+	u32 idx = _hash(ptr);
+	bucket *bucket = &buckets[idx];
+	bucket_node *node = _bucket_find(ptr);
+	min_assert(node != nil);
+
+	res = sys_munmap(node->base, node->size);
 	min_assert(res == 0);
+	res = _bucket_remove(node);
+	min_assert(res == 0);
+
+	if (!--bucket->length) buckets[idx].nodes = nil;
 }
 
 void min_collect() {}

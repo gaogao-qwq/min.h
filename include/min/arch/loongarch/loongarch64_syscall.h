@@ -42,6 +42,8 @@
 	#define MREMAP_MAYMOVE   		1
 	#define MREMAP_FIXED     		2
 	#define MREMAP_DONTUNMAP 		4
+
+	#define MAP_FAILED 		((void *) -1)
 #endif
 
 #ifndef _SYS_RANDOM_H

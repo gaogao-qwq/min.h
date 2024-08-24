@@ -102,7 +102,11 @@ i32 _min_sprintf(const char *restrict format, char *str,
 			} else if (specs[j].conv_type == CONVTYPE_POINTER) {
 				++i;
 				char t[24], *pt = t;
-				u64tohex(__builtin_va_arg(argp, u64), t);
+				if (sizeof (void *) == 8) {
+					u64tohex(__builtin_va_arg(argp, u64), t);
+				} else {
+					u32tohex(__builtin_va_arg(argp, u32), t);
+				}
 				while (*pt) {
 					str[k] = *pt;
 					++k, ++pt;
@@ -113,7 +117,7 @@ i32 _min_sprintf(const char *restrict format, char *str,
 			str[k++] = format[i];
 		}
 		++i;
-	}
+	} // Traverse fmt string
 	str[k] = '\0';
 	return 0;
 }

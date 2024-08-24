@@ -21,7 +21,7 @@ typedef struct bucket {
 
 static bucket buckets[BUCKET_CAP];
 
-u32 _hash(void *base) {
+static u32 _hash(void *base) {
 	u32 h = sizeof(void *);
 	const char *ptr_str = (const char *)&base;
 	size_t i;
@@ -32,7 +32,7 @@ u32 _hash(void *base) {
 	return h % BUCKET_CAP;
 }
 
-bucket_node *_bucket_find(void *ptr) {
+static bucket_node *_bucket_find(void *ptr) {
 	u32 idx = _hash(ptr);
 	bucket bucket = buckets[idx];
 	bucket_node *p = bucket.nodes;
@@ -49,7 +49,7 @@ bucket_node *_bucket_find(void *ptr) {
 	return nil;
 }
 
-void _bucket_insert(void *start, size_t size) {
+static void _bucket_insert(void *start, size_t size) {
 	u32 idx = _hash(start);
 	bucket *bucket = &buckets[idx];
 	bucket_node *p = bucket->nodes;
@@ -77,7 +77,7 @@ void _bucket_insert(void *start, size_t size) {
 	++bucket->length;
 }
 
-ssize_t _bucket_remove(bucket_node *node) {
+static ssize_t _bucket_remove(bucket_node *node) {
 	if (node == nil) return -1;
 	ssize_t res;
 	if (node->prev != nil) node->prev->next = node->next;

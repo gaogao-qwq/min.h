@@ -10,7 +10,8 @@ LIBOBJS := $(shell find -type f -wholename "./src/*.c" -not -path "./exmaple/*" 
 TESTOBJS := $(shell find -type f -wholename "./tests/*.c" -not -path "./exmaple/*" \
             -print | sed "s/\.c/\.o/")
 TEST_FLAGS := -std=c11 -Wall -O3
-LIB_FLAGS := -nostdlib \
+LIB_FLAGS := -Os \
+             -nostdlib \
              -Wall \
              -s \
              -static \
@@ -27,7 +28,7 @@ ALL: shared static test
 
 shared: $(LIBOBJS)
 	@mkdir -p $(SHARED_DIR)
-	$(CC) -shared -Os $(LIB_FLAGS) -o $(SHARED_DIR)/lib$(TARGET).so $^
+	$(CC) -shared $(LIB_FLAGS) -o $(SHARED_DIR)/lib$(TARGET).so $^
 
 static: $(LIBOBJS)
 	@mkdir -p $(STATIC_DIR)
@@ -36,7 +37,7 @@ static: $(LIBOBJS)
 test: $(TESTOBJS)
 
 $(LIBOBJS): %.o: %.c
-	$(CC) -c -g -fPIC -Os $(LIB_FLAGS) -o $@ $<
+	$(CC) -c -g -fPIC $(LIB_FLAGS) -o $@ $<
 
 $(TESTOBJS): %.o: %.c static shared
 	@mkdir -p $(TEST_BIN_DIR)/static

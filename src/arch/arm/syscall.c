@@ -1,5 +1,5 @@
 #ifdef __aarch64__
-#include "../../../include/min/arch/arm/aarch64_syscall.h"
+#include "../../../include/min/arch/arm/syscall.h"
 #include "../../../include/min/min_def.h"
 // x8 x0 x1 x2 x3 x4 x5
 
@@ -54,6 +54,17 @@ ssize_t sys_munmap(void *addr, size_t length) {
 	__asm__ __volatile__ ("svc #0"
 		: "=r" (ret)
 		: "r" (x8), "r" (x0), "r" (x1)
+	);
+	return ret;
+}
+
+ssize_t sys_brk(void *addr) {
+	register u64   rax __asm__("x8") = NR_BRK;
+	register void *rdi __asm__("x0") = addr;
+	ssize_t ret;
+	__asm__ __volatile__ ( "svc #0"
+		: "=r" (ret)
+		: "r" (x8), "r" (x0)
 	);
 	return ret;
 }

@@ -1,5 +1,5 @@
 #ifdef __loongarch__
-#include "../../../include/min/arch/loongarch/loongarch64_syscall.h"
+#include "../../../include/min/arch/loongarch/syscall.h"
 #include "../../../include/min/min_def.h"
 // a7 a0 a1 a2 a3 a4 a5
 
@@ -54,6 +54,17 @@ ssize_t sys_munmap(void *addr, size_t length) {
 	__asm__ __volatile__ ( "syscall 0x0"
 		: "=r" (ret)
 		: "r" (a7), "r" (a0), "r" (a1)
+	);
+	return ret;
+}
+
+ssize_t sys_brk(void *addr) {
+	register u64   rax __asm__("a7") = NR_BRK;
+	register void *rdi __asm__("a0") = addr;
+	ssize_t ret;
+	__asm__ __volatile__ ( "syscall 0x0"
+		: "=r" (ret)
+		: "r" (a7), "r" (a0)
 	);
 	return ret;
 }

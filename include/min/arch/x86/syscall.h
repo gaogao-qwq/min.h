@@ -9,6 +9,7 @@
 #define NR_WRITE        		((u64)1)
 #define NR_MMAP         		((u64)9)
 #define NR_MUNMAP       		((u64)11)
+#define NR_BRK          		((u64)12)
 #define NR_MREMAP       		((u64)25)
 #define NR_SOCKET       		((u64)41)
 #define NR_BIND         		((u64)49)
@@ -60,6 +61,8 @@ void *sys_mmap(void *addr, size_t length, i32 prot,
                i32 flags, i32 fd, i32 off);
 
 ssize_t sys_munmap(void *addr, size_t length);
+
+ssize_t sys_brk(void *addr);
 
 void *sys_mremap(void *old_addr, size_t old_size,
                  size_t new_size, i32 flags, void *new_address);

@@ -12,6 +12,7 @@
 #define NR_GETTIMEOFDAY 		((u64)169)
 #define NR_SOCKET       		((u64)198)
 #define NR_BIND         		((u64)200)
+#define NR_BRK          		((u64)214)
 #define NR_MUNMAP       		((u64)215)
 #define NR_MREMAP       		((u64)216)
 #define NR_MMAP         		((u64)222)
@@ -60,6 +61,8 @@ void *sys_mmap(void *addr, size_t length, i32 prot,
                i32 flags, i32 fd, i32 off);
 
 ssize_t sys_munmap(void *addr, size_t length);
+
+ssize_t sys_brk(void *addr);
 
 void *sys_mremap(void *old_addr, size_t old_size,
              size_t new_size, i32 flags, void *new_address);

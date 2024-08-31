@@ -1,5 +1,5 @@
 #ifdef __amd64__
-#include "../../../include/min/arch/x86/amd64_syscall.h"
+#include "../../../include/min/arch/x86/syscall.h"
 
 #include "../../../include/min/min_def.h"
 // rax rdi rsi rdx r10 r8 r9
@@ -59,6 +59,18 @@ ssize_t sys_munmap(void *addr, size_t length) {
 	__asm__ volatile ( "syscall"
 		: "=a" (ret)
 		: "r" (rax), "r" (rdi), "r" (rsi)
+		: "rcx", "r11", "memory"
+	);
+	return ret;
+}
+
+ssize_t sys_brk(void *addr) {
+	register u64   rax __asm__("rax") = NR_BRK;
+	register void *rdi __asm__("rdi") = addr;
+	ssize_t ret;
+	__asm__ volatile ( "syscall"
+		: "=a" (ret)
+		: "r" (rax), "r" (rdi)
 		: "rcx", "r11", "memory"
 	);
 	return ret;

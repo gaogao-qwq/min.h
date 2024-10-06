@@ -59,8 +59,8 @@ ssize_t sys_munmap(void *addr, size_t length) {
 }
 
 ssize_t sys_brk(void *addr) {
-	register u64   rax __asm__("a7") = NR_BRK;
-	register void *rdi __asm__("a0") = addr;
+	register u64   a7 __asm__("a7") = NR_BRK;
+	register void *a0 __asm__("a0") = addr;
 	ssize_t ret;
 	__asm__ __volatile__ ( "syscall 0x0"
 		: "=r" (ret)
